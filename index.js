@@ -1,6 +1,9 @@
 const express = require('express');
 const mysql = require('mysql');
 const dotenv = require('dotenv');
+const db = require("./connect_db");
+const hoKhauRouter = require("./routes/hoKhau");
+const nhanKhauRouter = require("./routes/nhanKhau");
 
 dotenv.config();
 
@@ -8,34 +11,11 @@ const app = express();
 
 const PORT = process.env.PORT;
 
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'quanlydancu',
-});
+app.use(express.json());
 
-app.get("/api/hokhau", (req, res, next) => {
-    const q = "SELECT * FROM `HoKhau`";
-    db.query(q, (err, data) => {
-        if(err) {
-            return res.json(err);
-        } else {
-            return res.json(data);
-        }
-    })
-});
+app.use("/api/hokhau", hoKhauRouter);
 
-app.get("/api/nhankhau", (req, res, next) => {
-        const q = "SELECT * FROM `NhanKhau`";
-    db.query(q, (err, data) => {
-        if(err) {
-            return res.json(err);
-        } else {
-            return res.json(data);
-        }
-    })
-});
+app.use("/api/nhankhau", nhanKhauRouter);
 
 app.get("/", (req, res, next) => {
     return res.json("hello from backend server");
