@@ -33,7 +33,7 @@ router.get("/:id", (req, res, next) => {
     })
 });
 
-router.post("/thaydoi/themhk", (req, res, next) => {
+router.post("/", (req, res, next) => {
     const {soHoKhau, khuVuc, diaChi, ngayLap, idChuHo} = req.body;
     const q = `INSERT INTO HoKhau (soHoKhau, khuVuc, diaChi, ngayLap, idChuHo) VALUES ('${soHoKhau}', '${khuVuc}', '${diaChi}', '${ngayLap}', '${idChuHo}')`;
     db.query(q, (err, data) => {
@@ -67,6 +67,38 @@ router.put("/thaydoi/:id", (req, res, next) => {
                 success: true,
                 message: "Thay doi thong tin HoKhau thanh cong",
                 data: req.body,
+            });
+        }
+    })
+});
+
+router.post("/thaydoi/tach", (req, res, next) => {
+    const {soHoKhau, khuVuc, diaChi, ngayLap, idNhanKhau} = req.body;
+    const q = `INSERT INTO HoKhau (soHoKhau, khuVuc, diaChi, ngayLap, idChuHo) VALUES ('${soHoKhau}', '${khuVuc}', '${diaChi}', '${ngayLap}', '${idNhanKhau[0]}')`;
+    db.query(q, (err, data) => {
+        if(err) {
+            return res.json(err);
+        } else {
+            return res.json({
+                success: true,
+                message: "Tach HoKhau thanh cong",
+                data: req.body,
+            });
+        }
+    }) 
+});
+
+router.delete("/:id", (req, res, next) => {
+    const id = req.params.id;
+    const q = 'DELETE FROM `HoKhau` WHERE `id` = ?';
+    db.query(q, id, (err, data) => {
+        if(err) {
+            return res.json(err);
+        } else {
+            return res.json({
+                success: true,
+                message: "Xoa HoKhau thanh cong",
+                data: "",
             });
         }
     })
