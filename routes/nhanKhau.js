@@ -62,21 +62,12 @@ router.post("/", (req, res, next) => {
 router.post("/thaydoi/:id", (req, res, next) => {
     const id = req.params.id;
     const {ngayChuyen, noiChuyen, ghiChu} = req.body;
-    const q = `INSERT INTO ThayDoiNhanKhau (ngayChuyen, noiChuyen, ghiChu, idNhauKhau) VALUES ('${ngayChuyen}', '${noiChuyen}', '${ghiChu}', ${id})`;
+    const q = `INSERT INTO ThayDoiNhanKhau (ngayChuyen, noiChuyen, ghiChu, idNhanKhau) VALUES ('${ngayChuyen}', '${noiChuyen}', '${ghiChu}', ${id})`;
     db.query(q, (err, data) => {
         if(err) {
             return res.json(err);
         }
         else {
-            if(req.body.ghiChu === "Đã qua đời") {
-                const q1 = `DELETE FROM NhanKhau WHERE id = ${id}`;
-                db.query(q1, id, (error, mess) => {
-                    if(error) return console.log(error);
-                    else {
-                        console.log(mess);
-                    }
-                });
-            }
             return res.json({
                 success: true,
                 message: "Thay doi Nhan Khau thanh cong",
@@ -138,7 +129,7 @@ router.get("/thongke/tamtru", (req, res, next) => {
 router.post("/tamvang/:id", (req, res, next) => {
     const idNhanKhau = req.params.id;
     const {soGiayTamVang, noiTamTru, tuNgay, denNgay} = req.body;
-    const q = `INSERT INTO TamVang (soGiayTamVang, noiTamTru, tuNgay, denNgay, idNhauKhau) VALUES ('${soGiayTamVang}', '${noiTamTru}', '${tuNgay}', '${denNgay}', ${idNhanKhau})`;
+    const q = `INSERT INTO TamVang (soGiayTamVang, noiTamTru, tuNgay, denNgay, idNhanKhau) VALUES ('${soGiayTamVang}', '${noiTamTru}', '${tuNgay}', '${denNgay}', ${idNhanKhau})`;
     db.query(q, (err, data) => {
         if (err) {
             return res.json(err);
@@ -163,6 +154,76 @@ router.get("/thongke/tamvang", (req, res, next) => {
             return res.json({
                 success: true,
                 message: "Thong tin TamVang",
+                data: data,
+            });
+        }
+    })
+});
+
+router.get("/lichsuthaydoi/:id", (req, res, next) => {
+    const idNhanKhau = req.params.id;
+    const q = `SELECT * FROM ThayDoiNhanKhau WHERE idNhanKhau = ${idNhanKhau}`;
+    db.query(q, (err, data) => {
+        if(err) {
+            return res.json(err);
+        }
+        else {
+            return res.json({
+                success: true,
+                message: "Thong tin ThayDoiNhanKhau",
+                data: data
+            });
+        }
+    })
+});
+
+router.get("/thongke/gioitinhnam", (req, res, next) => {
+    const currentDate = new Date().toISOString().split('T')[0];
+    const q = `SELECT nk.* FROM NhanKhau nk LEFT JOIN TamVang tv ON nk.id = tv.idNhanKhau WHERE (tv.idNhanKhau IS NULL OR tv.denNgay < '${currentDate}') AND nk.gioiTinh = 1`;
+    db.query(q, (err, data) => {
+        if(err) {
+            return res.json(err);
+        }
+        else {
+            return res.json({
+                success: true,
+                message: "Thong tin NhanKhau gioi tinh Nam",
+                data: data
+            });
+        }
+    })
+});
+
+router.get("/thongke/gioitinhnu", (req, res, next) => {
+    const currentDate = new Date().toISOString().split('T')[0];
+    const q = `SELECT nk.* FROM NhanKhau nk LEFT JOIN TamVang tv ON nk.id = tv.idNhanKhau WHERE (tv.idNhanKhau IS NULL OR tv.denNgay < '${currentDate}') AND nk.gioiTinh = 0`;
+    db.query(q, (err, data) => {
+        if(err) {
+            return res.json(err);
+        }
+        else {
+            return res.json({
+                success: true,
+                message: "Thong tin NhanKhau gioi tinh Nu",
+                data: data
+            });
+        }
+    })
+});
+
+router.get("/thongke/dotuoi", (req, res, next) => {
+    const currentDate = new Date().toISOString().split('T')[0];
+    const {tuoiMin, tuoiMax} = req.body;
+    const q = `SELECT nk.* FROM NhanKhau nk LEFT JOIN TamVang tv ON nk.id = tv.idNhanKhau WHERE (tv.idNhanKhau IS NULL OR tv.denNgay < '${currentDate}') AND ngaySinh >= DATE_SUB(CURRENT_DATE, INTERVAL ${tuoiMax} YEAR)
+             AND ngaySinh <= DATE_SUB(CURRENT_DATE, INTERVAL ${tuoiMin} YEAR)`;
+    db.query(q, (err, data) => {
+        if(err) {
+            return res.json(err);
+        }
+        else {
+            return res.json({
+                success: true,
+                message: `Thong tin NhanKhau trong do tuoi ${tuoiMin} - ${tuoiMax}`,
                 data: data,
             });
         }

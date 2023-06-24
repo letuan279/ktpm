@@ -21,7 +21,6 @@ app.get("/", (req, res, next) => {
     return res.json("hello from backend server");
 });
 
-
 app.listen(PORT, (req, res) => {
     console.log(`Connect to backend at port ${PORT}`);
 });

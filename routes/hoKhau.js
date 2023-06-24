@@ -18,8 +18,8 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/:id", (req, res, next) => {
-    const idNhanKhau = req.params.id;
-    const q = `SELECT * FROM NhanKhau WHERE idHoKhau = ${idNhanKhau}`;
+    const idHoKhau = req.params.id;
+    const q = `SELECT nk.* FROM NhanKhau nk JOIN ThayDoiNhanKhau tdnk ON nk.id = tdnk.idNhanKhau WHERE nk.idHoKhau = ${idHoKhau} AND tdnk.ghiChu != 'Đã qua đời'`;
     db.query(q, (err, data) => {
         if(err) {
             return res.json(err);
@@ -106,9 +106,22 @@ router.delete("/:id", (req, res, next) => {
     })
 });
 
-router.post("/timkiem", (req, res, next) => {
-    const id = req.body.id;
-    
-})
+router.get("/thongke/timkiem", (req, res, next) => {
+    const soHoKhau = req.query.soHoKhau;
+    console.log(soHoKhau);
+    const q = `SELECT * FROM HoKhau WHERE soHoKhau LIKE '${soHoKhau}%'`;
+    db.query(q, (err, data) => {
+        if(err) {
+            return res.json(err);
+        }
+        else {
+            return res.json({
+                success: true,
+                message: "thong tin HoKhau",
+                data: data
+            });
+        }
+    })
+});
 
 module.exports = router;
