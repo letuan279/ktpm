@@ -11,12 +11,12 @@ CREATE TABLE `TamVang`(
     `noiTamTru` CHAR(255) NOT NULL,
     `tuNgay` DATE NOT NULL,
     `denNgay` DATE NOT NULL,
-    `idNhauKhau` INT UNSIGNED NOT NULL
+    `idNhanKhau` INT UNSIGNED NOT NULL
 );
 CREATE TABLE `NhanKhau`(
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `hoTen` VARCHAR(255) NOT NULL,
-    `soCMND` CHAR(255) NOT NULL,
+    `soCMND` CHAR(255) UNIQUE NOT NULL,
     `bietDanh` VARCHAR(255) NOT NULL,
     `gioiTinh` SMALLINT NOT NULL,
     `thuongTru` BIGINT NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE `ThayDoiNhanKhau`(
     `ngayChuyen` DATE NOT NULL,
     `noiChuyen` VARCHAR(255) NOT NULL,
     `ghiChu` VARCHAR(255) NOT NULL,
-    `idNhauKhau` INT UNSIGNED NOT NULL
+    `idNhanKhau` INT UNSIGNED NOT NULL
 );
 CREATE TABLE `HoKhau`(
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -61,12 +61,13 @@ CREATE TABLE `TamTru`(
     `soGiayTamTru` CHAR(255) NOT NULL,
     `lyDo` VARCHAR(255) NOT NULL,
     `thoiGianTamTru` DATE NOT NULL,
-    `idNhauKhau` INT UNSIGNED NOT NULL
+    `HoTen` VARCHAR(255) NOT NULL,
+    `soCMND` VARCHAR(255) UNIQUE NOT NULL,
+    `ngaySinh` DATE NOT NULL,
+    `gioiTinh` SMALLINT NOT NULL
 );
 ALTER TABLE
     `NhanKhau` ADD CONSTRAINT `nhankhau_idhokhau_foreign` FOREIGN KEY(`idHoKhau`) REFERENCES `HoKhau`(`id`);
-ALTER TABLE
-    `TamTru` ADD CONSTRAINT `tamtru_idnhaukhau_foreign` FOREIGN KEY(`idNhauKhau`) REFERENCES `NhanKhau`(`id`);
 ALTER TABLE
     `KhaiBaoYTe` ADD CONSTRAINT `khaibaoyte_idnhankhau_foreign` FOREIGN KEY(`idNhanKhau`) REFERENCES `NhanKhau`(`id`);
 ALTER TABLE
@@ -74,9 +75,9 @@ ALTER TABLE
 ALTER TABLE
     `ThayDoiHoKhau` ADD CONSTRAINT `thaydoihokhau_idhokhau_foreign` FOREIGN KEY(`idHoKhau`) REFERENCES `HoKhau`(`id`);
 ALTER TABLE
-    `TamVang` ADD CONSTRAINT `tamvang_idnhaukhau_foreign` FOREIGN KEY(`idNhauKhau`) REFERENCES `NhanKhau`(`id`);
+    `TamVang` ADD CONSTRAINT `tamvang_idnhaukhau_foreign` FOREIGN KEY(`idNhanKhau`) REFERENCES `NhanKhau`(`id`);
 ALTER TABLE
-    `ThayDoiNhanKhau` ADD CONSTRAINT `thaydoinhankhau_idnhaukhau_foreign` FOREIGN KEY(`idNhauKhau`) REFERENCES `NhanKhau`(`id`);
+    `ThayDoiNhanKhau` ADD CONSTRAINT `thaydoinhankhau_idnhaukhau_foreign` FOREIGN KEY(`idNhanKhau`) REFERENCES `NhanKhau`(`id`);
 
 
 INSERT INTO HoKhau (soHoKhau, khuVuc, diaChi, ngayLap, idChuHo) VALUES
@@ -100,12 +101,12 @@ INSERT INTO ThayDoiHoKhau (nguoiThayDoi, thongTinThayDoi, thayDoiTu, thayDoiThan
 ('Lê Thị D', 'Chuyển vào', 'Quận 2', 'Phường 2', '2022-08-01', 2),
 ('Trần Thị H', 'Chuyển vào', 'Quận 3', 'Phường 3', '2022-08-01', 3);
 
-INSERT INTO TamTru (soGiayTamTru, lyDo, thoiGianTamTru, idNhauKhau) VALUES
-('TT001', 'Lí do 1', '2022-08-01', 1),
-('TT002', 'Lí do 2', '2022-08-01', 4),
-('TT003', 'Lí do 3', '2022-08-01', 7);
+INSERT INTO TamTru (soGiayTamTru, lyDo, thoiGianTamTru, HoTen, soCMND, ngaySinh, gioiTinh) VALUES
+('TT001', 'Lý do A', '2022-01-01', 'Nguyễn Văn A', '123456789', '1990-01-01', 1),
+('TT002', 'Lý do B', '2022-02-02', 'Trần Thị B', '987654321', '1995-02-02', 0),
+('TT003', 'Lý do C', '2022-03-03', 'Lê Văn C', '111222333', '2000-03-03', 1);
 
-INSERT INTO ThayDoiNhanKhau (ngayChuyen, noiChuyen, ghiChu, idNhauKhau) VALUES
+INSERT INTO ThayDoiNhanKhau (ngayChuyen, noiChuyen, ghiChu, idNhanKhau) VALUES
 ('2022-08-01', 'Quận 1', 'Chuyển vào', 2),
 ('2022-08-01', 'Quận 2', 'Chuyển vào', 5),
 ('2022-08-01', 'Quận 3', 'Chuyển vào', 8);
@@ -115,7 +116,7 @@ INSERT INTO KhaiBaoYTe (idNhanKhau, hanhTrinh, trieuChung, doiTuongTiepXuc) VALU
 (4, 'Hồ Chí Minh - Đà Nẵng', 'Đau họng, sốt nhẹ', 'Đang cách ly tại khu vực có dịch'),
 (7, 'Hồ Chí Minh - Phú Quốc', 'Mệt mỏi, đau đầu', 'Tiếp xúc với người nghi nhiễm COVID-19');
 
-INSERT INTO TamVang (soGiayTamVang, noiTamTru, tuNgay, denNgay, idNhauKhau) VALUES
+INSERT INTO TamVang (soGiayTamVang, noiTamTru, tuNgay, denNgay, idNhanKhau) VALUES
 ('TV001', 'Tỉnh Bình Dương', '2022-08-01', '2022-08-14', 1),
 ('TV002', 'Tỉnh Vũng Tàu', '2022-08-01', '2022-08-14', 4),
 ('TV003', 'Tỉnh Cà Mau', '2022-08-01', '2022-08-14', 7);
