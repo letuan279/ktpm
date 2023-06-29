@@ -16,10 +16,10 @@ CREATE TABLE `TamVang`(
 CREATE TABLE `NhanKhau`(
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `hoTen` VARCHAR(255) NOT NULL,
-    `soCMND` CHAR(255) UNIQUE NOT NULL,
+    `soCMND` CHAR(255) UNIQUE NULL,
     `bietDanh` VARCHAR(255) NOT NULL,
     `gioiTinh` SMALLINT NOT NULL,
-    `thuongTru` BIGINT NOT NULL,
+    `thuongTru` VARCHAR(255) NOT NULL,
     `ngaySinh` DATE NOT NULL,
     `tonGiao` CHAR(255) NOT NULL,
     `idHoKhau` INT UNSIGNED NOT NULL,
@@ -42,11 +42,12 @@ CREATE TABLE `HoKhau`(
 );
 CREATE TABLE `CachLy`(
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `hinhThuc` SMALLINT NOT NULL,
+    `hinhThucTest` CHAR(100) NOT NULL,
     `thoiDiem` DATE NOT NULL,
-    `mucDoCovid` SMALLINT NOT NULL,
+    `mucDoCovid` CHAR(10) NOT NULL,
     `trangThaiTest` VARCHAR(255) NOT NULL
 );
+
 CREATE TABLE `ThayDoiHoKhau`(
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `nguoiThayDoi` VARCHAR(255) NOT NULL,
@@ -81,47 +82,44 @@ ALTER TABLE
 
 
 INSERT INTO HoKhau (soHoKhau, khuVuc, diaChi, ngayLap, idChuHo) VALUES
-('HK001', 'Khu phố 1', 'Đường Hoàng Văn Thụ, Phường 1, Thành phố Hồ Chí Minh', '2022-01-01', 1),
-('HK002', 'Khu phố 2', 'Đường Nguyễn Thị Minh Khai, Phường 2, Thành phố Hồ Chí Minh', '2022-01-01', 4),
-('HK003', 'Khu phố 3', 'Đường Nguyễn Văn Linh, Thành phố Hồ Chí Minh', '2022-01-01', 7);
+('HK001', 'Khu A', 'Số 1, đường ABC', '2020-01-01', 1),
+('HK002', 'Khu B', 'Số 2, đường XYZ', '2021-05-10', 2),
+('HK003', 'Khu C', 'Số 3, đường LMN', '2019-11-11', 3);
 
 INSERT INTO NhanKhau (hoTen, soCMND, bietDanh, gioiTinh, thuongTru, ngaySinh, tonGiao, idHoKhau, ngheNghiep) VALUES
-('Nguyễn Văn A', '123456789', 'A', 1, '123456789', '2000-01-01', 'Không', 1, 'Sinh viên'),
-('Nguyễn Thị B', '987654321', 'B', 0, '987654321', '2002-01-01', 'Không', 1, 'Học sinh'),
-('Trần Văn C', '456789123', 'C', 1, '456789123', '1990-01-01', 'Không', 1, 'Kỹ sư'),
-('Lê Thị D', '789123456', 'D', 0, '789123456', '1995-01-01', 'Không', 2, 'Giáo viên'),
-('Phạm Văn E', '147258369', 'E', 1, '147258369', '1980-01-01', 'Không', 2, 'Nhân viên văn phòng'),
-('Đỗ Thị F', '258369147', 'F', 0, '258369147', '1998-01-01', 'Không', 2, 'Bác sĩ'),
-('Nguyễn Văn G', '369147258', 'G', 1, '369147258', '1975-01-01', 'Không', 3, 'Công nhân'),
-('Trần Thị H', '951753456', 'H', 0, '951753456', '1960-01-01', 'Không', 3, 'Nội trợ'),
-('Lê Văn I', '753951456', 'I', 1, '753951456', '1950-01-01', 'Không', 3, 'Tài xế');
+('Nguyen Van A', '123456789', 'A', 1, 'Số 1, đường ABC', '1990-01-01', 'Không', 1, 'Nhân viên văn phòng'),
+('Tran Thi B', '234567890', 'B', 0, 'Số 1, đường ABC', '1995-05-05', 'Không', 1, 'Sinh viên'),
+('Pham Van C', '345678901', 'C', 1, 'Số 2, đường XYZ', '1980-12-25', 'Công giáo', 2, 'Kỹ sư'),
+('Le Thi D', '456789012', 'D', 0, 'Số 2, đường XYZ', '1975-10-10', 'Phật giáo', 2, 'Giáo viên'),
+('Hoang Van E', '567890123', 'E', 1, 'Số 3, đường LMN', '1988-03-20', 'Không', 3, 'Bác sĩ'),
+('Nguyen Thi F', '678901234', 'F', 0, 'Số 3, đường LMN', '1998-07-07', 'Công giáo', 3, 'Sinh viên');
 
 INSERT INTO ThayDoiHoKhau (nguoiThayDoi, thongTinThayDoi, thayDoiTu, thayDoiThanh, ngayThayDoi, idHoKhau) VALUES
-('Nguyễn Văn A', 'Chuyển vào', 'Quận 1', 'Phường 1', '2022-08-01', 1),
-('Lê Thị D', 'Chuyển vào', 'Quận 2', 'Phường 2', '2022-08-01', 2),
-('Trần Thị H', 'Chuyển vào', 'Quận 3', 'Phường 3', '2022-08-01', 3);
-
-INSERT INTO TamTru (soGiayTamTru, lyDo, thoiGianTamTru, HoTen, soCMND, ngaySinh, gioiTinh) VALUES
-('TT001', 'Lý do A', '2022-01-01', 'Nguyễn Văn A', '123456789', '1990-01-01', 1),
-('TT002', 'Lý do B', '2022-02-02', 'Trần Thị B', '987654321', '1995-02-02', 0),
-('TT003', 'Lý do C', '2022-03-03', 'Lê Văn C', '111222333', '2000-03-03', 1);
-
-INSERT INTO ThayDoiNhanKhau (ngayChuyen, noiChuyen, ghiChu, idNhanKhau) VALUES
-('2022-08-01', 'Quận 1', 'Chuyển vào', 2),
-('2022-08-01', 'Quận 2', 'Chuyển vào', 5),
-('2022-08-01', 'Quận 3', 'Chuyển vào', 8);
-
-INSERT INTO KhaiBaoYTe (idNhanKhau, hanhTrinh, trieuChung, doiTuongTiepXuc) VALUES
-(1, 'Hồ Chí Minh - Hà Nội', 'Sốt, ho, khó thở', 'Người nghi nhiễm COVID-19'),
-(4, 'Hồ Chí Minh - Đà Nẵng', 'Đau họng, sốt nhẹ', 'Đang cách ly tại khu vực có dịch'),
-(7, 'Hồ Chí Minh - Phú Quốc', 'Mệt mỏi, đau đầu', 'Tiếp xúc với người nghi nhiễm COVID-19');
+('Nguyen Van A', 'Chuyển đến số 1, đường XYZ', 'Số 1, đường ABC', 'Số 1, đường XYZ', '2022-01-01', 1),
+('Pham Van C', 'Chuyển đến số 3, đường LMN', 'Số 2, đường XYZ', 'Số 3, đường LMN', '2021-08-01', 2),
+('Hoang Van E', 'Chuyển đến số 2, đường XYZ', 'Số 3, đường LMN', 'Số 2, đường XYZ', '2023-06-01', 3);
 
 INSERT INTO TamVang (soGiayTamVang, noiTamTru, tuNgay, denNgay, idNhanKhau) VALUES
-('TV001', 'Tỉnh Bình Dương', '2022-08-01', '2022-08-14', 1),
-('TV002', 'Tỉnh Vũng Tàu', '2022-08-01', '2022-08-14', 4),
-('TV003', 'Tỉnh Cà Mau', '2022-08-01', '2022-08-14', 7);
+('TV001', 'Số 1, đường ABC', '2022-01-01', '2022-01-15', 1),
+('TV002', 'Số 2, đường XYZ', '2021-08-01', '2021-08-14', 3),
+('TV003', 'Số 3, đường LMN', '2023-06-01', '2023-06-15', 5);
 
-INSERT INTO CachLy (hinhThuc, thoiDiem, mucDoCovid, trangThaiTest) VALUES
-(1, '2022-08-01', 2, 'Âm tính'),
-(2, '2022-08-01', 1, 'Dương tính'),
-(1, '2022-08-01', 3, 'Âm tính');
+INSERT INTO KhaiBaoYTe (idNhanKhau, hanhTrinh, trieuChung, doiTuongTiepXuc) VALUES
+(1, 'Đi làm về', 'Sốt, ho', 'Người nhiễm COVID-19'),
+(2, 'Đi học về', 'Đau đầu', 'Người tiếp xúc với người nhiễm COVID-19'),
+(4, 'Đi chơi về', 'Đau bụng', 'Người nhiễm COVID-19');
+
+INSERT INTO CachLy (hinhThucTest, thoiDiem, mucDoCovid, trangThaiTest) VALUES
+('Test PCR', '2022-01-02', 'F0', 'Âm tính'),
+('Test nhanh', '2021-08-02', 'F1', 'Dương tính'),
+('Test PCR', '2023-06-01', 'F0', 'Âm tính');
+
+INSERT INTO ThayDoiNhanKhau (ngayChuyen, noiChuyen, ghiChu, idNhanKhau) VALUES
+('2022-01-01', 'Chuyển đến số 1, đường XYZ', 'Chuyển nhà', 1),
+('2021-08-01', 'Chuyển đến số 3, đường LMN', 'Chuyển nhà', 3),
+('2023-06-01', 'Chuyển đến số 2, đường XYZ', 'Chuyển nhà', 5);
+
+INSERT INTO TamTru (soGiayTamTru, lyDo, thoiGianTamTru, HoTen, soCMND, ngaySinh, gioiTinh) VALUES
+('TT001', 'Công tác', '2022-01-01', 'Nguyen Van A', '123456789', '1990-01-01', 1),
+('TT002', 'Học tập', '2021-08-01', 'Pham Van C', '345678901', '1980-12-25', 1),
+('TT003', 'Khám bệnh', '2023-06-01', 'Hoang Van E', '567890123', '1988-03-20', 1);
