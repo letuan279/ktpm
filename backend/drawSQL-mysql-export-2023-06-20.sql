@@ -53,13 +53,13 @@ CREATE TABLE `CachLy`(
 
 CREATE TABLE `ThayDoiHoKhau`(
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `nguoiThayDoi` VARCHAR(255) NOT NULL,
     `thongTinThayDoi` VARCHAR(255) NOT NULL,
     `thayDoiTu` VARCHAR(255) NOT NULL,
     `thayDoiThanh` VARCHAR(255) NOT NULL,
     `ngayThayDoi` DATE NOT NULL,
     `idHoKhau` INT UNSIGNED NOT NULL
 );
+
 CREATE TABLE `TamTru`(
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `soGiayTamTru` CHAR(255) NOT NULL,
@@ -71,6 +71,7 @@ CREATE TABLE `TamTru`(
     `gioiTinh` SMALLINT NOT NULL,
     `ngheNghiep` VARCHAR(255) NOT NULL
 );
+
 ALTER TABLE
     `NhanKhau` ADD CONSTRAINT `nhankhau_idhokhau_foreign` FOREIGN KEY(`idHoKhau`) REFERENCES `HoKhau`(`id`);
 ALTER TABLE
@@ -100,10 +101,10 @@ INSERT INTO NhanKhau (hoTen, soCMND, bietDanh, gioiTinh, thuongTru, ngaySinh, to
 ('Hoang Van E', '567890123', 'E', 1, 'Số 3, đường LMN', '1988-03-20', 'Không', 3, 'Bác sĩ', 'Tạm vắng'),
 ('Nguyen Thi F', '678901234', 'F', 0, 'Số 3, đường LMN', '1998-07-07', 'Công giáo', 3, 'Sinh viên', 'Đang ở');
 
-INSERT INTO ThayDoiHoKhau (nguoiThayDoi, thongTinThayDoi, thayDoiTu, thayDoiThanh, ngayThayDoi, idHoKhau) VALUES
-('Nguyen Van A', 'Chuyển đến số 1, đường XYZ', 'Số 1, đường ABC', 'Số 1, đường XYZ', '2022-01-01', 1),
-('Pham Van C', 'Chuyển đến số 3, đường LMN', 'Số 2, đường XYZ', 'Số 3, đường LMN', '2021-08-01', 2),
-('Hoang Van E', 'Chuyển đến số 2, đường XYZ', 'Số 3, đường LMN', 'Số 2, đường XYZ', '2023-06-01', 3);
+INSERT INTO ThayDoiHoKhau (thongTinThayDoi, thayDoiTu, thayDoiThanh, ngayThayDoi, idHoKhau) VALUES
+('Chuyển đến số 1, đường XYZ', 'Số 1, đường ABC', 'Số 1, đường XYZ', '2022-01-01', 1),
+('Chuyển đến số 3, đường LMN', 'Số 2, đường XYZ', 'Số 3, đường LMN', '2021-08-01', 2),
+('Chuyển đến số 2, đường XYZ', 'Số 3, đường LMN', 'Số 2, đường XYZ', '2023-06-01', 3);
 
 INSERT INTO TamVang (soGiayTamVang, noiTamTru, tuNgay, denNgay, idNhanKhau) VALUES
 ('TV001', 'Số 1, đường ABC', '2022-01-01', '2022-01-15', 1),
