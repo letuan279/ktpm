@@ -19,7 +19,6 @@ router.get("/", (req, res, next) => {
 
 router.get("/:id", (req, res, next) => {
     const idHoKhau = req.params.id;
-    // const q = `SELECT nk.* FROM NhanKhau nk JOIN ThayDoiNhanKhau tdnk ON nk.id = tdnk.idNhanKhau WHERE nk.idHoKhau = ${idHoKhau} AND tdnk.ghiChu != 'Đã qua đời'`;
     const q = `SELECT nk.* FROM NhanKhau nk WHERE nk.idHoKhau = ${idHoKhau} AND nk.trangThai != 'Đã qua đời'`;
     db.query(q, (err, data) => {
         if (err) {
@@ -71,15 +70,9 @@ router.post("/tach", (req, res, next) => {
 
 router.post("/thaydoi/:id", (req, res, next) => {
     const id = req.params.id;
-    const q = 'UPDATE `HoKhau` SET `soHoKhau` = ?, `khuVuc` = ?, `diaChi` = ?, `ngayLap` = ?, `idChuHo` = ? WHERE `id` = ?';
-    const values = [
-        req.body.soHoKhau,
-        req.body.khuVuc,
-        req.body.diaChi,
-        req.body.ngayLap,
-        req.body.idChuHo
-    ];
-    db.query(q, [...values, id], (err, data) => {
+    const {soHoKhau, khuVuc, diaChi, ngayLap, idChuHo} = req.body;
+    const q = `UPDATE HoKhau SET soHoKhau = '${soHoKhau}', khuVuc = '${khuVuc}', diaChi = '${diaChi}', ngayLap = '${ngayLap}', idChuHo = ${idChuHo} WHERE id = ${id}`;
+    db.query(q, (err, data) => {
         if (err) {
             return res.json(err);
         } else {
@@ -129,6 +122,22 @@ router.get("/thongke/timkiem", (req, res, next) => {
                 message: "thong tin HoKhau",
                 data: data
             });
+        }
+    })
+});
+
+router.get("/thaydoi/hokhau", (req, res, next) => {
+    const q = "SELECT * FROM `ThayDoiHoKhau`";
+    db.query(q, (err, data) => {
+        if(err) {
+            return res.json(err);
+        }
+        else {
+            return res.json({
+                success: true,
+                message: "Thong tin bang ThayDoiHoKhau",
+                data: data
+            })
         }
     })
 });
