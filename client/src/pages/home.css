@@ -1,0 +1,62 @@
+.svg-tk {
+	display: block;
+	width: 150px;
+	height: 150px;
+	margin: 20px auto;
+	transform: rotate(-90deg);
+}
+.circle-tk {
+	stroke-linecap: round;
+	fill: none;
+    background-color: white;
+}
+.c1 {
+	animation: c1 .5s ease-in-out both .5s;
+}
+.c2 {
+	animation: c2 .5s ease-in-out both .5s;
+}
+.c3 {
+	animation: c3 .5s ease-in-out both .5s;
+}
+.c4 {
+	animation: c4 .5s ease-in-out both .5s;
+}
+
+@keyframes c1 {
+	0% {
+		opacity: 0;
+		stroke-dasharray: 0 409;
+	}
+	100% {
+		stroke-dasharray: 30 379;
+		opacity: 1;
+	}
+}
+@keyframes c2 {
+	0% {
+		opacity: 0;
+		stroke-dasharray: 0 409;
+	}
+	100% {
+		stroke-dasharray: 166 243;
+	}
+}
+@keyframes c3 {
+	0% {
+		opacity: 0;
+		stroke-dasharray: 0 409;
+	}
+	100% {
+		stroke-dasharray: 86 323;
+	}
+}
+@keyframes c4 {
+	0% {
+		opacity: 0;
+		stroke-dasharray: 0 409;
+	}
+	100% {
+		stroke-dasharray: 86 323;
+	}
+}
