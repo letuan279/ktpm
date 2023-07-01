@@ -3,6 +3,7 @@
     `idNhanKhau` INT UNSIGNED NOT NULL,
     `hanhTrinh` VARCHAR(255) NOT NULL,
     `trieuChung` VARCHAR(255) NOT NULL,
+    `ngayKhaiBao` DATE NOT NULL,
     `doiTuongTiepXuc` VARCHAR(255) NOT NULL
 );
 CREATE TABLE `TamVang`(
@@ -43,6 +44,7 @@ CREATE TABLE `HoKhau`(
 );
 CREATE TABLE `CachLy`(
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `idNhanKhau` INT UNSIGNED NOT NULL,
     `hinhThucTest` CHAR(100) NOT NULL,
     `thoiDiem` DATE NOT NULL,
     `mucDoCovid` CHAR(10) NOT NULL,
@@ -81,6 +83,8 @@ ALTER TABLE
     `TamVang` ADD CONSTRAINT `tamvang_idnhaukhau_foreign` FOREIGN KEY(`idNhanKhau`) REFERENCES `NhanKhau`(`id`);
 ALTER TABLE
     `ThayDoiNhanKhau` ADD CONSTRAINT `thaydoinhankhau_idnhaukhau_foreign` FOREIGN KEY(`idNhanKhau`) REFERENCES `NhanKhau`(`id`);
+ALTER TABLE
+    `CachLy` ADD CONSTRAINT `cachly_idnhankhau_foreign` FOREIGN KEY(`idNhanKhau`) REFERENCES `NhanKhau`(`id`);
 
 
 INSERT INTO HoKhau (soHoKhau, khuVuc, diaChi, ngayLap, idChuHo) VALUES
@@ -106,15 +110,15 @@ INSERT INTO TamVang (soGiayTamVang, noiTamTru, tuNgay, denNgay, idNhanKhau) VALU
 ('TV002', 'Số 2, đường XYZ', '2021-08-01', '2021-08-14', 3),
 ('TV003', 'Số 3, đường LMN', '2023-06-01', '2023-06-15', 5);
 
-INSERT INTO KhaiBaoYTe (idNhanKhau, hanhTrinh, trieuChung, doiTuongTiepXuc) VALUES
-(1, 'Đi làm về', 'Sốt, ho', 'Người nhiễm COVID-19'),
-(2, 'Đi học về', 'Đau đầu', 'Người tiếp xúc với người nhiễm COVID-19'),
-(4, 'Đi chơi về', 'Đau bụng', 'Người nhiễm COVID-19');
+INSERT INTO KhaiBaoYTe (idNhanKhau, hanhTrinh, trieuChung, ngayKhaiBao, doiTuongTiepXuc) VALUES
+(1, 'Đi làm về', 'Sốt, ho', '2022-01-01', 'Người nhiễm COVID-19'),
+(2, 'Đi học về', 'Đau đầu', '2022-10-10', 'Người tiếp xúc với người nhiễm COVID-19'),
+(4, 'Đi chơi về', 'Đau bụng', '2023-05-07', 'Người nhiễm COVID-19');
 
-INSERT INTO CachLy (hinhThucTest, thoiDiem, mucDoCovid, trangThaiTest) VALUES
-('Test PCR', '2022-01-02', 'F0', 'Âm tính'),
-('Test nhanh', '2021-08-02', 'F1', 'Dương tính'),
-('Test PCR', '2023-06-01', 'F0', 'Âm tính');
+INSERT INTO CachLy (idNhanKhau, hinhThucTest, thoiDiem, mucDoCovid, trangThaiTest) VALUES
+(1, 'Test PCR', '2022-01-02', 'F0', 'Âm tính'),
+(2, 'Test nhanh', '2021-08-02', 'F1', 'Dương tính'),
+(4, 'Test PCR', '2023-06-01', 'F0', 'Âm tính');
 
 INSERT INTO ThayDoiNhanKhau (ngayChuyen, noiChuyen, ghiChu, idNhanKhau) VALUES
 ('2022-01-01', 'Chuyển đến số 1, đường XYZ', 'Chuyển nhà', 1),

@@ -1,9 +1,9 @@
 const express = require('express');
 const mysql = require('mysql');
 const dotenv = require('dotenv');
-const db = require("./connect_db");
 const hoKhauRouter = require("./routes/hoKhau");
 const nhanKhauRouter = require("./routes/nhanKhau");
+const YTeRouter = require("./routes/YTe");
 
 dotenv.config();
 
@@ -16,6 +16,8 @@ app.use(express.json());
 app.use("/api/hokhau", hoKhauRouter);
 
 app.use("/api/nhankhau", nhanKhauRouter);
+
+app.use("/api/yte", YTeRouter);
 
 app.get("/", (req, res, next) => {
     return res.json("hello from backend server");
