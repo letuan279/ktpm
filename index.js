@@ -4,14 +4,22 @@ const dotenv = require('dotenv');
 const db = require("./connect_db");
 const hoKhauRouter = require("./routes/hoKhau");
 const nhanKhauRouter = require("./routes/nhanKhau");
+const cors = require('cors')
+const compression = require('compression')
+const bp = require('body-parser')
 
 dotenv.config();
 
 const app = express();
 
+// app.use(bp.json())
+// app.use(bp.urlencoded({ extended: true }))
+app.use(express.json());
+
 const PORT = process.env.PORT || 8000;
 
-app.use(express.json());
+app.use(cors())
+app.use(compression());
 
 app.use("/api/hokhau", hoKhauRouter);
 

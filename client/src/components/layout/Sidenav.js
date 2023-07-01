@@ -84,88 +84,75 @@ function Sidenav({ color }) {
       </div>
       <hr />
       <Menu theme="light" mode="inline">
+        <Menu.Item className="menu-item-header" key="5">
+          Quản lý dân cư
+        </Menu.Item>
         <Menu.Item key="1">
-          <NavLink to="/dashboard">
+          <NavLink to="/ho-khau">
             <span
               className="icon"
               style={{
-                background: page === "dashboard" ? color : "",
+                background: page === "ho-khau" ? color : "",
               }}
             >
               {dashboard}
             </span>
-            <span className="label">Trang chủ</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item className="menu-item-header" key="5">
-          Cá nhân
-        </Menu.Item>
-        <Menu.Item key="2">
-          <NavLink to="/personal/tasks">
-            <span
-              className="icon"
-              style={{
-                background: page === "/personal/tasks" ? color : "",
-              }}
-            >
-              {tables}
-            </span>
-            <span className="label">Danh sách công việc</span>
+            <span className="label">Hộ khẩu</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="2">
-          <NavLink to="/personal/kanban">
+          <NavLink to="/nhan-khau">
             <span
               className="icon"
               style={{
-                background: page === "/personal/kanban" ? color : "",
+                background: page === "/nhan-khau" ? color : "",
               }}
             >
               {tables}
             </span>
-            <span className="label">Bảng công việc</span>
+            <span className="label">Nhân khẩu</span>
           </NavLink>
-        </Menu.Item>
-        {/* <Menu.Item key="2">
-          <NavLink to="/personal/calendar">
-            <span
-              className="icon"
-              style={{
-                background: page === "/personal/calendar" ? color : "",
-              }}
-            >
-              {tables}
-            </span>
-            <span className="label">Lịch</span>
-          </NavLink>
-        </Menu.Item> */}
-        <Menu.Item className="menu-item-header" key="5">
-          Nhóm
         </Menu.Item>
         <Menu.Item key="3">
-          <NavLink to="/group/list">
+          <NavLink to="/lich-su-thay-doi">
             <span
               className="icon"
               style={{
-                background: page === "/group/list" ? color : "",
+                background: page === "/lich-su-thay-doi" ? color : "",
               }}
             >
-              {billing}
+              {tables}
             </span>
-            <span className="label">Danh sách nhóm</span>
+            <span className="label">Lịch sử thay đổi</span>
           </NavLink>
         </Menu.Item>
+        <Menu.Item className="menu-item-header" key="6">
+          Phòng tránh covid
+        </Menu.Item>
         <Menu.Item key="4">
-          <NavLink to="/group/task">
+          <NavLink to="/khai-bao-y-te">
             <span
               className="icon"
               style={{
-                background: page === "/group/task" ? color : "",
+                background: page === "/khai-bao-y-te" ? color : "",
               }}
             >
               {billing}
             </span>
-            <span className="label">Danh sách công việc</span>
+            <span className="label">Khai báo y tế</span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="7">
+          <NavLink to="/cach-ly">
+            <span
+              className="icon"
+              style={{
+                background: page === "/cach-ly" ? color : "",
+              }}
+            >
+              {billing}
+            </span>
+            <span className="label">Cách ly</span>
           </NavLink>
         </Menu.Item>
         {/* <Menu.Item key="5">

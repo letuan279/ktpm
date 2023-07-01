@@ -10,26 +10,22 @@ import Kanban from "./pages/Personal/Kanban";
 import Calendar from "./pages/Personal/Calendar";
 import GroupList from "./pages/Group/GroupList";
 import GroupTask from "./pages/Group/GroupTask";
-import AppContextProvider from "./context/AppContext";
+import NewAppContextProvider from "./context/NewAppContext";
+import HoKhau from "./components/hokhau/HoKhau";
 
 function App() {
   return (
-    <AppContextProvider>
+    <NewAppContextProvider>
       <div className="App">
         <Switch>
-          <Route path="/sign-in" exact component={SignIn} />
+          <Route path="/dang-nhap" exact component={SignIn} />
           <Main>
-            <Route exact path="/personal/tasks" component={Tasks} />
-            <Route exact path="/personal/kanban" component={Kanban} />
-            <Route exact path="/personal/calendar" component={Calendar} />
-            <Route exact path="/group/list" component={GroupList} />
-            <Route exact path="/group/task" component={GroupTask} />
-            <Route exact path="/dashboard" component={Home} />
-            <Redirect from="*" to="/personal/tasks" />
+            <Route path="/ho-khau" exact component={HoKhau} />
+            <Redirect from="*" to="/ho-khau" />
           </Main>
         </Switch>
       </div>
-    </AppContextProvider>
+    </NewAppContextProvider>
   );
 }
 
