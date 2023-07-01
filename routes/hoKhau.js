@@ -19,7 +19,8 @@ router.get("/", (req, res, next) => {
 
 router.get("/:id", (req, res, next) => {
     const idHoKhau = req.params.id;
-    const q = `SELECT nk.* FROM NhanKhau nk JOIN ThayDoiNhanKhau tdnk ON nk.id = tdnk.idNhanKhau WHERE nk.idHoKhau = ${idHoKhau} AND tdnk.ghiChu != 'Đã qua đời'`;
+    // const q = `SELECT nk.* FROM NhanKhau nk JOIN ThayDoiNhanKhau tdnk ON nk.id = tdnk.idNhanKhau WHERE nk.idHoKhau = ${idHoKhau} AND tdnk.ghiChu != 'Đã qua đời'`;
+    const q = `SELECT nk.* FROM NhanKhau nk WHERE nk.idHoKhau = ${idHoKhau} AND nk.trangThai != 'Đã qua đời'`;
     db.query(q, (err, data) => {
         if(err) {
             return res.json(err);
@@ -75,8 +76,9 @@ router.put("/thaydoi/:id", (req, res, next) => {
 router.post("/thaydoi/tach", (req, res, next) => {
     
     const {soHoKhau, khuVuc, diaChi, ngayLap, idNhanKhau} = req.body;
+    const idChuHoMoi = idNhanKhau[0];
     const idNhanKhauValues = idNhanKhau.join(',');
-    const q = `INSERT INTO HoKhau (soHoKhau, khuVuc, diaChi, ngayLap, idChuHo) VALUES ('${soHoKhau}', '${khuVuc}', '${diaChi}', '${ngayLap}', '${idNhanKhau[0]}'); UPDATE NhanKhau SET idHoKhau = LAST_INSERT_ID() WHERE id IN (${idNhanKhauValues})`;
+    const q = `INSERT INTO HoKhau (soHoKhau, khuVuc, diaChi, ngayLap, idChuHo) VALUES ('${soHoKhau}', '${khuVuc}', '${diaChi}', '${ngayLap}', '${idChuHoMoi}'); UPDATE NhanKhau SET idHoKhau = LAST_INSERT_ID() WHERE id IN (${idNhanKhauValues})`;
     db.query(q, (err, data) => {
         if(err) {
             return res.json(err);
@@ -84,7 +86,13 @@ router.post("/thaydoi/tach", (req, res, next) => {
             return res.json({
                 success: true,
                 message: "Tach HoKhau thanh cong",
-                data: req.body,
+                data: {
+                    "soHoKhau": soHoKhau,
+                    "khuVuc": khuVuc,
+                    "diaChi": diaChi,
+                    "ngayLap": ngayLap,
+                    "idChuHo": idChuHoMoi
+                },
             });
         }
     }) 

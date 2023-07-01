@@ -23,7 +23,8 @@ CREATE TABLE `NhanKhau`(
     `ngaySinh` DATE NOT NULL,
     `tonGiao` CHAR(255) NOT NULL,
     `idHoKhau` INT UNSIGNED NOT NULL,
-    `ngheNghiep` VARCHAR(255) NOT NULL
+    `ngheNghiep` VARCHAR(255) NOT NULL,
+    `trangThai` VARCHAR(255) NOT NULL
 );
 CREATE TABLE `ThayDoiNhanKhau`(
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -86,13 +87,13 @@ INSERT INTO HoKhau (soHoKhau, khuVuc, diaChi, ngayLap, idChuHo) VALUES
 ('HK002', 'Khu B', 'Số 2, đường XYZ', '2021-05-10', 2),
 ('HK003', 'Khu C', 'Số 3, đường LMN', '2019-11-11', 3);
 
-INSERT INTO NhanKhau (hoTen, soCMND, bietDanh, gioiTinh, thuongTru, ngaySinh, tonGiao, idHoKhau, ngheNghiep) VALUES
-('Nguyen Van A', '123456789', 'A', 1, 'Số 1, đường ABC', '1990-01-01', 'Không', 1, 'Nhân viên văn phòng'),
-('Tran Thi B', '234567890', 'B', 0, 'Số 1, đường ABC', '1995-05-05', 'Không', 1, 'Sinh viên'),
-('Pham Van C', '345678901', 'C', 1, 'Số 2, đường XYZ', '1980-12-25', 'Công giáo', 2, 'Kỹ sư'),
-('Le Thi D', '456789012', 'D', 0, 'Số 2, đường XYZ', '1975-10-10', 'Phật giáo', 2, 'Giáo viên'),
-('Hoang Van E', '567890123', 'E', 1, 'Số 3, đường LMN', '1988-03-20', 'Không', 3, 'Bác sĩ'),
-('Nguyen Thi F', '678901234', 'F', 0, 'Số 3, đường LMN', '1998-07-07', 'Công giáo', 3, 'Sinh viên');
+INSERT INTO NhanKhau (hoTen, soCMND, bietDanh, gioiTinh, thuongTru, ngaySinh, tonGiao, idHoKhau, ngheNghiep, trangThai) VALUES
+('Nguyen Van A', '123456789', 'A', 1, 'Số 1, đường ABC', '1990-01-01', 'Không', 1, 'Nhân viên văn phòng', 'Đang ở'),
+('Tran Thi B', '234567890', 'B', 0, 'Số 1, đường ABC', '1995-05-05', 'Không', 1, 'Sinh viên', 'Đang ở'),
+('Pham Van C', '345678901', 'C', 1, 'Số 2, đường XYZ', '1980-12-25', 'Công giáo', 2, 'Kỹ sư', 'Đang ở'),
+('Le Thi D', '456789012', 'D', 0, 'Số 2, đường XYZ', '1975-10-10', 'Phật giáo', 2, 'Giáo viên', 'Đang ở'),
+('Hoang Van E', '567890123', 'E', 1, 'Số 3, đường LMN', '1988-03-20', 'Không', 3, 'Bác sĩ', 'Tạm vắng'),
+('Nguyen Thi F', '678901234', 'F', 0, 'Số 3, đường LMN', '1998-07-07', 'Công giáo', 3, 'Sinh viên', 'Đang ở');
 
 INSERT INTO ThayDoiHoKhau (nguoiThayDoi, thongTinThayDoi, thayDoiTu, thayDoiThanh, ngayThayDoi, idHoKhau) VALUES
 ('Nguyen Van A', 'Chuyển đến số 1, đường XYZ', 'Số 1, đường ABC', 'Số 1, đường XYZ', '2022-01-01', 1),

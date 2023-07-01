@@ -34,7 +34,7 @@ router.get("/:id", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-    const q = 'INSERT INTO NhanKhau (hoTen, soCMND, bietDanh, gioiTinh, thuongTru, ngaySinh, tonGiao, idHoKhau, ngheNghiep) VALUES (?)';
+    const q = 'INSERT INTO NhanKhau (hoTen, soCMND, bietDanh, gioiTinh, thuongTru, ngaySinh, tonGiao, idHoKhau, ngheNghiep, trangThai) VALUES (?)';
     const values = [
         req.body.hoTen,
         req.body.soCMND,
@@ -44,7 +44,8 @@ router.post("/", (req, res, next) => {
         req.body.ngaySinh,
         req.body.tonGiao,
         req.body.idHoKhau,
-        req.body.ngheNghiep
+        req.body.ngheNghiep,
+        req.body.trangThai
     ];
     db.query(q, [values], (err, data) => {
         if(err) {
@@ -62,7 +63,7 @@ router.post("/", (req, res, next) => {
 router.post("/thaydoi/:id", (req, res, next) => {
     const id = req.params.id;
     const {ngayChuyen, noiChuyen, ghiChu} = req.body;
-    const q = `INSERT INTO ThayDoiNhanKhau (ngayChuyen, noiChuyen, ghiChu, idNhanKhau) VALUES ('${ngayChuyen}', '${noiChuyen}', '${ghiChu}', ${id})`;
+    const q = `INSERT INTO ThayDoiNhanKhau (ngayChuyen, noiChuyen, ghiChu, idNhanKhau) VALUES ('${ngayChuyen}', '${noiChuyen}', '${ghiChu}', ${id}); UPDATE NhanKhau SET trangThai = '${ghiChu}' WHERE id = ${id}`;
     db.query(q, (err, data) => {
         if(err) {
             return res.json(err);
@@ -129,7 +130,7 @@ router.get("/thongke/tamtru", (req, res, next) => {
 router.post("/tamvang/:id", (req, res, next) => {
     const idNhanKhau = req.params.id;
     const {soGiayTamVang, noiTamTru, tuNgay, denNgay} = req.body;
-    const q = `INSERT INTO TamVang (soGiayTamVang, noiTamTru, tuNgay, denNgay, idNhanKhau) VALUES ('${soGiayTamVang}', '${noiTamTru}', '${tuNgay}', '${denNgay}', ${idNhanKhau})`;
+    const q = `INSERT INTO TamVang (soGiayTamVang, noiTamTru, tuNgay, denNgay, idNhanKhau) VALUES ('${soGiayTamVang}', '${noiTamTru}', '${tuNgay}', '${denNgay}', ${idNhanKhau}); UPDATE NhanKhau SET trangThai = 'Tạm vắng'`;
     db.query(q, (err, data) => {
         if (err) {
             return res.json(err);
@@ -179,7 +180,7 @@ router.get("/lichsuthaydoi/:id", (req, res, next) => {
 
 router.get("/thongke/gioitinhnam", (req, res, next) => {
     const currentDate = new Date().toISOString().split('T')[0];
-    const q = `SELECT nk.* FROM NhanKhau nk LEFT JOIN TamVang tv ON nk.id = tv.idNhanKhau WHERE (tv.idNhanKhau IS NULL OR tv.denNgay < '${currentDate}') AND nk.gioiTinh = 1`;
+    const q = `SELECT nk.* FROM NhanKhau nk LEFT JOIN TamVang tv ON nk.id = tv.idNhanKhau WHERE (tv.idNhanKhau IS NULL OR tv.denNgay < '${currentDate}') AND nk.gioiTinh = 1 AND nk.trangThai != 'Đã qua đời'`;
     db.query(q, (err, data) => {
         if(err) {
             return res.json(err);
@@ -196,7 +197,7 @@ router.get("/thongke/gioitinhnam", (req, res, next) => {
 
 router.get("/thongke/gioitinhnu", (req, res, next) => {
     const currentDate = new Date().toISOString().split('T')[0];
-    const q = `SELECT nk.* FROM NhanKhau nk LEFT JOIN TamVang tv ON nk.id = tv.idNhanKhau WHERE (tv.idNhanKhau IS NULL OR tv.denNgay < '${currentDate}') AND nk.gioiTinh = 0`;
+    const q = `SELECT nk.* FROM NhanKhau nk LEFT JOIN TamVang tv ON nk.id = tv.idNhanKhau WHERE (tv.idNhanKhau IS NULL OR tv.denNgay < '${currentDate}') AND nk.gioiTinh = 0 AND nk.trangThai != 'Đã qua đời'`;
     db.query(q, (err, data) => {
         if(err) {
             return res.json(err);
@@ -215,7 +216,7 @@ router.get("/thongke/dotuoi", (req, res, next) => {
     const currentDate = new Date().toISOString().split('T')[0];
     const {tuoiMin, tuoiMax} = req.body;
     const q = `SELECT nk.* FROM NhanKhau nk LEFT JOIN TamVang tv ON nk.id = tv.idNhanKhau WHERE (tv.idNhanKhau IS NULL OR tv.denNgay < '${currentDate}') AND ngaySinh >= DATE_SUB(CURRENT_DATE, INTERVAL ${tuoiMax} YEAR)
-             AND ngaySinh <= DATE_SUB(CURRENT_DATE, INTERVAL ${tuoiMin} YEAR)`;
+             AND ngaySinh <= DATE_SUB(CURRENT_DATE, INTERVAL ${tuoiMin} YEAR) AND nk.trangThai != 'Đã qua đời'`;
     db.query(q, (err, data) => {
         if(err) {
             return res.json(err);
