@@ -178,6 +178,22 @@ router.get("/lichsuthaydoi/:id", (req, res, next) => {
     })
 });
 
+router.get("/thaydoi/nhankhau", (req, res, next) => {
+    const q = "SELECT * FROM `ThayDoiNhanKhau`";
+    db.query(q, (err, data) => {
+        if(err) {
+            return res.json(err);
+        }
+        else {
+            return res.json({
+                success: true,
+                message: "Thong tin bang ThayDoiNhanKhau",
+                data: data
+            })
+        }
+    })
+});
+
 router.get("/thongke/gioitinhnam", (req, res, next) => {
     const currentDate = new Date().toISOString().split('T')[0];
     const q = `SELECT nk.* FROM NhanKhau nk LEFT JOIN TamVang tv ON nk.id = tv.idNhanKhau WHERE (tv.idNhanKhau IS NULL OR tv.denNgay < '${currentDate}') AND nk.gioiTinh = 1 AND nk.trangThai != 'Đã qua đời'`;
