@@ -126,6 +126,19 @@ function Sidenav({ color }) {
             <span className="label">Lịch sử thay đổi</span>
           </NavLink>
         </Menu.Item>
+        <Menu.Item key="10">
+          <NavLink to="/thong-ke">
+            <span
+              className="icon"
+              style={{
+                background: page === "/thong-ke" ? color : "",
+              }}
+            >
+              {tables}
+            </span>
+            <span className="label">Thống kê</span>
+          </NavLink>
+        </Menu.Item>
         <Menu.Item className="menu-item-header" key="6">
           Phòng tránh covid
         </Menu.Item>

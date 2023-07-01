@@ -50,6 +50,25 @@ router.post("/", (req, res, next) => {
     })
 });
 
+router.post("/tach", (req, res, next) => {
+    const { soHoKhau, khuVuc, diaChi, ngayLap, idNhanKhau } = req.body;
+    const idChuHoMoi = idNhanKhau[0];
+    const idNhanKhauValues = idNhanKhau.join(',');
+    const q = `INSERT INTO HoKhau (soHoKhau, khuVuc, diaChi, ngayLap, idChuHo) VALUES ('${soHoKhau}', '${khuVuc}', '${diaChi}', '${ngayLap}', '${idChuHoMoi}'); SELECT * FROM HoKhau WHERE id = LAST_INSERT_ID(); UPDATE NhanKhau SET idHoKhau = LAST_INSERT_ID() WHERE id IN (${idNhanKhauValues})`;
+    db.query(q, (err, results) => {
+        if (err) {
+            return res.json(err);
+        } else {
+            const hoKhau = results[1][0]; // Lấy thông tin hộ khẩu từ kết quả truy vấn SELECT
+            return res.json({
+                success: true,
+                message: "Tach HoKhau thanh cong",
+                data: hoKhau, // Trả về thông tin hộ khẩu vừa được truy vấn
+            });
+        }
+    });
+});
+
 router.post("/thaydoi/:id", (req, res, next) => {
     const id = req.params.id;
     const q = 'UPDATE `HoKhau` SET `soHoKhau` = ?, `khuVuc` = ?, `diaChi` = ?, `ngayLap` = ?, `idChuHo` = ? WHERE `id` = ?';
@@ -60,7 +79,6 @@ router.post("/thaydoi/:id", (req, res, next) => {
         req.body.ngayLap,
         req.body.idChuHo
     ];
-    console.log(req.body);
     db.query(q, [...values, id], (err, data) => {
         if (err) {
             return res.json(err);
@@ -76,31 +94,6 @@ router.post("/thaydoi/:id", (req, res, next) => {
                         data: rows[0],
                     });
                 }
-            });
-        }
-    })
-});
-
-router.post("/thaydoi/tach", (req, res, next) => {
-
-    const { soHoKhau, khuVuc, diaChi, ngayLap, idNhanKhau } = req.body;
-    const idChuHoMoi = idNhanKhau[0];
-    const idNhanKhauValues = idNhanKhau.join(',');
-    const q = `INSERT INTO HoKhau (soHoKhau, khuVuc, diaChi, ngayLap, idChuHo) VALUES ('${soHoKhau}', '${khuVuc}', '${diaChi}', '${ngayLap}', '${idChuHoMoi}'); UPDATE NhanKhau SET idHoKhau = LAST_INSERT_ID() WHERE id IN (${idNhanKhauValues})`;
-    db.query(q, (err, data) => {
-        if (err) {
-            return res.json(err);
-        } else {
-            return res.json({
-                success: true,
-                message: "Tach HoKhau thanh cong",
-                data: {
-                    "soHoKhau": soHoKhau,
-                    "khuVuc": khuVuc,
-                    "diaChi": diaChi,
-                    "ngayLap": ngayLap,
-                    "idChuHo": idChuHoMoi
-                },
             });
         }
     })

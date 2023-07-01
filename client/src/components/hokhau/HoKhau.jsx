@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useData } from '../../context/NewAppContext'
 import { Card, Table, Row, Col, Button, Input, Modal, Descriptions, Tag } from 'antd';
 import moment from 'moment';
 import { BACK_END_URL } from '../../context/const';
 import EditHoKhauModal from './EditHoKhauModal';
+import TachHoKhauModal from './TachHoKhauModal';
 
 const HoKhau = () => {
-  const {hokhau, setHokhau, nhankhau, setNhanKhau} = useData()
+  const {hokhau, setHokhau, nhankhau, setNhanKhau, fetchDataHoKhau} = useData()
   const returnChuHo = (soHoKhau) => {
     const hk = hokhau.find(item => item.soHoKhau === soHoKhau)
     const ch = nhankhau.find(item => item.id === hk.idChuHo)
@@ -42,7 +43,15 @@ const HoKhau = () => {
   const handleEdit = (record) => {
     setEditSelectedRow(record);
     setEditModalVisible(true);
-};
+  };
+
+  // Tach HoKhau
+  const [tachSelectedRow, setTachSelectedRow] = useState(null);
+  const [tachModalVisible, setTachModalVisible] = useState(false);
+  const handleTach = (record) => {
+    setTachSelectedRow(record);
+    setTachModalVisible(true);
+  };
 
 
   // Colums
@@ -74,16 +83,21 @@ const HoKhau = () => {
       title: 'Thao tác',
       render: (text, record) => (
         <div onClick={e => e.stopPropagation()}>
-            <Button onClick={() => handleEdit(record)} >Sửa</Button>
-            <Button style={{marginLeft: 10}}>Tách hộ</Button>
+            <Button type='primary' onClick={() => handleEdit(record)} >Sửa</Button>
+            <Button type='danger' onClick={() => handleTach(record)} style={{marginLeft: 10}}>Tách hộ</Button>
         </div>
     ),
     },
   ];
 
+  // Load data hokhau
+  useEffect(() => {
+    fetchDataHoKhau()
+  }, [])
+
   return (
     <div className="tabled">
-    <Row gutter={[24, 0]}>
+      <Row gutter={[24, 0]}>
         <Col xs="24" xl={24}>
           <Card
             bordered={false}
@@ -125,16 +139,15 @@ const HoKhau = () => {
               footer={null}
           >
             {selectedRow !== null && (
-                <Descriptions column={1}>
-                <Descriptions.Item label="Số Hộ Khẩu">{selectedRow.soHoKhau}</Descriptions.Item>
-                <Descriptions.Item label="Địa Chỉ">{selectedRow.diaChi}</Descriptions.Item>
-                <Descriptions.Item label="Khu Vực">{selectedRow.khuVuc}</Descriptions.Item>
-                <Descriptions.Item label="Ngày Lập">{moment(selectedRow.ngayLap).format('DD-MM-YYYY')}</Descriptions.Item>
+                <div>
+                <p>Số Hộ Khẩu: {selectedRow.soHoKhau}</p>
+                <p>Địa Chỉ: {selectedRow.diaChi}</p>
+                <p>Khu Vực: {selectedRow.khuVuc}</p>
+                <p>Ngày Lập: {moment(selectedRow.ngayLap).format('DD-MM-YYYY')}</p>
 
-                <Descriptions.Item label="Chủ hộ">{<Tag color='orange'>{returnChuHo(selectedRow.soHoKhau).hoTen}</Tag>}</Descriptions.Item>
-                <Descriptions.Item label="Danh sách thành viên">{hoKhauDetail.map(item => <Tag key={item.soCMND} color='purple'>{item.hoTen}</Tag>)}</Descriptions.Item>
-                
-              </Descriptions>
+                <p>Chủ hộ: {<Tag color='orange'>{returnChuHo(selectedRow.soHoKhau).hoTen}</Tag>}</p>
+                <p>Danh sách thành viên: {hoKhauDetail.map(item => <Tag key={item.soCMND} color='purple'>{item.hoTen}</Tag>)}</p>
+              </div>
             )}
         </Modal>
 
@@ -145,6 +158,15 @@ const HoKhau = () => {
                   setSelectedRecord={setEditSelectedRow}
                   editModalVisible={editModalVisible}
                   setEditModalVisible={setEditModalVisible}
+                />}
+
+        {/* Modal Tach HoKhau */}
+        {tachSelectedRow && 
+                <TachHoKhauModal 
+                  selectedRecord={tachSelectedRow} 
+                  setSelectedRecord={setTachSelectedRow}
+                  editModalVisible={tachModalVisible}
+                  setEditModalVisible={setTachModalVisible}
                 />}
         </Row>
     </div>

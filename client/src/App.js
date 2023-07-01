@@ -12,6 +12,7 @@ import GroupList from "./pages/Group/GroupList";
 import GroupTask from "./pages/Group/GroupTask";
 import NewAppContextProvider from "./context/NewAppContext";
 import HoKhau from "./components/hokhau/HoKhau";
+import NhanKhau from "./components/nhankhau/NhanKhau";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/dang-nhap" exact component={SignIn} />
           <Main>
             <Route path="/ho-khau" exact component={HoKhau} />
+            <Route path="/nhan-khau" exact component={NhanKhau} />
             <Redirect from="*" to="/ho-khau" />
           </Main>
         </Switch>

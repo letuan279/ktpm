@@ -7,27 +7,27 @@ const NewAppContextProvider = ({ children }) => {
     const [hokhau, setHokhau] = useState([])
     const [nhankhau, setNhanKhau] = useState([])
 
+    const fetchDataHoKhau = async () => {
+        try {
+            const res = await fetch(`${BACK_END_URL}/hokhau`);
+            const data = await res.json();
+            setHokhau(data.data);
+          } catch (error) {
+            console.error(error);
+          }
+    }
+
+    const fetchDataNhanKhau = async () => {
+        try {
+            const res = await fetch(`${BACK_END_URL}/nhankhau`);
+            const data = await res.json();
+            setNhanKhau(data.data);
+          } catch (error) {
+            console.error(error);
+          }
+    }
+
     useEffect(() => {
-        const fetchDataHoKhau = async () => {
-            try {
-                const res = await fetch(`${BACK_END_URL}/hokhau`);
-                const data = await res.json();
-                setHokhau(data.data);
-              } catch (error) {
-                console.error(error);
-              }
-        }
-
-        const fetchDataNhanKhau = async () => {
-            try {
-                const res = await fetch(`${BACK_END_URL}/nhankhau`);
-                const data = await res.json();
-                setNhanKhau(data.data);
-              } catch (error) {
-                console.error(error);
-              }
-        }
-
         fetchDataHoKhau()
         fetchDataNhanKhau()
     }, [])
@@ -38,7 +38,9 @@ const NewAppContextProvider = ({ children }) => {
                 hokhau,
                 setHokhau,
                 nhankhau,
-                setNhanKhau
+                setNhanKhau,
+                fetchDataHoKhau,
+                fetchDataNhanKhau
             }
         }>
             {children}
