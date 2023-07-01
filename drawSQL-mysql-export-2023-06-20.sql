@@ -66,7 +66,8 @@ CREATE TABLE `TamTru`(
     `HoTen` VARCHAR(255) NOT NULL,
     `soCMND` VARCHAR(255) UNIQUE NOT NULL,
     `ngaySinh` DATE NOT NULL,
-    `gioiTinh` SMALLINT NOT NULL
+    `gioiTinh` SMALLINT NOT NULL,
+    `ngheNghiep` VARCHAR(255) NOT NULL
 );
 ALTER TABLE
     `NhanKhau` ADD CONSTRAINT `nhankhau_idhokhau_foreign` FOREIGN KEY(`idHoKhau`) REFERENCES `HoKhau`(`id`);
@@ -120,7 +121,7 @@ INSERT INTO ThayDoiNhanKhau (ngayChuyen, noiChuyen, ghiChu, idNhanKhau) VALUES
 ('2021-08-01', 'Chuyển đến số 3, đường LMN', 'Chuyển nhà', 3),
 ('2023-06-01', 'Chuyển đến số 2, đường XYZ', 'Chuyển nhà', 5);
 
-INSERT INTO TamTru (soGiayTamTru, lyDo, thoiGianTamTru, HoTen, soCMND, ngaySinh, gioiTinh) VALUES
-('TT001', 'Công tác', '2022-01-01', 'Nguyen Van A', '123456789', '1990-01-01', 1),
-('TT002', 'Học tập', '2021-08-01', 'Pham Van C', '345678901', '1980-12-25', 1),
-('TT003', 'Khám bệnh', '2023-06-01', 'Hoang Van E', '567890123', '1988-03-20', 1);
+INSERT INTO TamTru (soGiayTamTru, lyDo, thoiGianTamTru, HoTen, soCMND, ngaySinh, gioiTinh, ngheNghiep) VALUES
+('TT001', 'Công tác', '2022-01-01', 'Nguyen Van A', '123456789', '1990-01-01', 1, 'Kỹ sư'),
+('TT002', 'Học tập', '2021-08-01', 'Pham Van C', '345678901', '2002-12-25', 1, 'Sinh viên'),
+('TT003', 'Khám bệnh', '2023-06-01', 'Hoang Van E', '567890123', '1988-03-20', 1, 'Nhà văn');

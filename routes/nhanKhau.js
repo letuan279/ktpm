@@ -112,7 +112,7 @@ router.post("/tamtru", (req, res, next) => {
 });
 
 router.get("/thongke/tamtru", (req, res, next) => {
-    const q = "SELECT * FROM `TamTru`";
+    const q = `SELECT * FROM TamTru`;
     db.query(q, (err, data) => {
         if(err) {
             return res.json(err);
@@ -146,7 +146,7 @@ router.post("/tamvang/:id", (req, res, next) => {
 });
 
 router.get("/thongke/tamvang", (req, res, next) => {
-    const q = "SELECT * FROM `TamVang`";
+    const q = `SELECT TamVang.*, NhanKhau.* FROM TamVang JOIN NhanKhau ON TamVang.idNhanKhau = NhanKhau.id`;
     db.query(q, (err, data) => {
         if(err) {
             return res.json(err);
