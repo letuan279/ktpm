@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from 'react'
 import { useData } from '../../context/NewAppContext';
 import { Card, Table, Row, Col, Button, Input, Modal, Descriptions, Tag, Space } from 'antd';
 import moment from 'moment';
+import AddKhaiBaoYTeModal from "./AddKhaiBaoYTeModal";
 
 const KhaiBaoYTe = () => {
 
@@ -43,6 +44,16 @@ const KhaiBaoYTe = () => {
 
     ]
 
+    useEffect(() => {
+        fetchDataKhaiBaoYTe()
+    }, [])
+
+       // Add modal KhaiBaoYTe
+       const [addKhaiBaoYTeModalVisible, setAddKhaiBaoYTeModalVisible] = useState(false);
+       const handleAddKhaiBaoYTe = () => {
+           setAddKhaiBaoYTeModalVisible(true);
+       };
+
     return (
         <>
         <div className="tabled">
@@ -54,11 +65,7 @@ const KhaiBaoYTe = () => {
                     title="Thông tin về khai báo y tế"
                     extra={
                         <Space>
-                            {/* <Input 
-                            placeholder='Nhập tên nk/CMND'
-                            onChange={(e) => setSearch(e.target.value)}
-                            width={600}
-                            /> */}
+                           <Button type="primary" onClick={handleAddKhaiBaoYTe}>Khai báo y tế</Button>
                         </Space>
                     }>
                     <Table 
@@ -66,11 +73,14 @@ const KhaiBaoYTe = () => {
                         columns={columsKhaiBaoYTe} 
                         dataSource={khaiBaoYTe}
                         className="ant-border-space"
-                        scroll={{ y: 200 }}
                     />
                     </Card>
                 </Col>
             </Row>
+            {addKhaiBaoYTeModalVisible && <AddKhaiBaoYTeModal 
+                    editModalVisible={addKhaiBaoYTeModalVisible}
+                    setEditModalVisible={setAddKhaiBaoYTeModalVisible}
+                />}
         </div>
         </>
     )

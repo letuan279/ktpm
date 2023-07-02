@@ -9,7 +9,7 @@ const CachLy = () => {
 
     const columsCachLy = [
         {
-            title: 'ID nhân khẩu',
+            title: 'Họ và tên',
             dataIndex: 'idNhanKhau',
             key: 'idNhanKhau',
             width: '15%',

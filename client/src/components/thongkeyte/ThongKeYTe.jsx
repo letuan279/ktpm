@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Row,
     Col,
@@ -10,11 +10,29 @@ import {
     Tag
 } from "antd";
 import { useData } from '../../context/NewAppContext';
+import { BACK_END_URL } from '../../context/const';
+import YteEChart from './YteEChart'
+import ThongKeLineChart from './ThongKeLineChart';
 
 const ThongKeYTe = () => {
-    const {hokhau, nhankhau} = useData();
+    const {hokhau, nhankhau, khaiBaoYTe, cachLy} = useData();
 
     const {Title} = Typography
+
+
+    const [macCovid, setMacCovid] = useState(0)
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await fetch(`${BACK_END_URL}/yte/thongke/${"2023-07-02"}`);
+                const data = await res.json();
+                setMacCovid(data.data[0].count)
+              } catch (error) {
+                console.error(error);
+              }
+        }
+        fetchData();
+    }, [])
 
   return (
     <>
@@ -22,41 +40,41 @@ const ThongKeYTe = () => {
             <Col span={24} md={6} className="mb-24">
             <Card
                 bordered={false}
-                title={<h6 className="font-semibold m-0">Hộ khẩu</h6>}
+                title={<h6 className="font-semibold m-0">Khai báo y tế</h6>}
                 className="header-solid h-full"
                 bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
                 extra={<Avatar shape="square" size={48} src='./hokhau.png'></Avatar>}
             >
                 <Space>
-                    <Title style={{marginLeft: 20}}>{hokhau.length}</Title>
-                    <Title level={5} >{"(hộ)"}</Title>
+                    <Title style={{marginLeft: 20}}>{khaiBaoYTe.length}</Title>
+                    <Title level={5} >{"(lần)"}</Title>
                 </Space>
             </Card>
             </Col>
             <Col span={24} md={6} className="mb-24">
             <Card
                 bordered={false}
-                title={<h6 className="font-semibold m-0">Nhân khẩu</h6>}
+                title={<h6 className="font-semibold m-0">Khai báo cách ly</h6>}
                 className="header-solid h-full"
                 bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
                 extra={<Avatar shape="square" size={48} src='./people.png'></Avatar>}
             >
                 <Space>
-                    <Title style={{marginLeft: 20}}>{nhankhau.length}</Title>
-                    <Title level={5} >{"(người)"}</Title>
+                    <Title style={{marginLeft: 20}}>{cachLy.length}</Title>
+                    <Title level={5} >{"(lần)"}</Title>
                 </Space>
             </Card>
             </Col>
             <Col span={24} md={6} className="mb-24">
             <Card
                 bordered={false}
-                title={<h6 className="font-semibold m-0">Số lượng nam</h6>}
+                title={<h6 className="font-semibold m-0">Số người mắc covid</h6>}
                 className="header-solid h-full"
                 bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
                 extra={<Avatar shape="square" size={48} src='./men.png'></Avatar>}
             >
                 <Space>
-                    <Title style={{marginLeft: 20}}>{nhankhau.filter(item => item.gioiTinh === 1).length}</Title>
+                    <Title style={{marginLeft: 20}}>{macCovid}</Title>
                     <Title level={5} >{"(người)"}</Title>
                 </Space>
             </Card>
@@ -64,13 +82,13 @@ const ThongKeYTe = () => {
             <Col span={24} md={6} className="mb-24">
             <Card
                 bordered={false}
-                title={<h6 className="font-semibold m-0">Số lượng nữ</h6>}
+                title={<h6 className="font-semibold m-0">Số người khỏe mạnh</h6>}
                 className="header-solid h-full"
                 bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
                 extra={<Avatar shape="square" size={48} src='./woman.png'></Avatar>}
             >
                 <Space>
-                    <Title style={{marginLeft: 20}}>{nhankhau.filter(item => item.gioiTinh === 0).length}</Title>
+                    <Title style={{marginLeft: 20}}>{nhankhau.filter(item => item.trangThai !== 'Đã qua đời').length - macCovid}</Title>
                     <Title level={5} >{"(người)"}</Title>
                 </Space>
             </Card>
@@ -80,25 +98,27 @@ const ThongKeYTe = () => {
             <Col span={24} md={12} className="mb-24">
             <Card
                 bordered={false}
-                title={<h6 className="font-semibold m-0">Thống kê tạm trú tạm vắng</h6>}
+                title={<h6 className="font-semibold m-0">Thống kê số lượng mắc covid</h6>}
                 className="header-solid h-full"
                 bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
                 extra={<div className="sales">
                 <ul style={{display: 'flex', gap: 10}}>
-                  <li><Tag color='green' >{" "}</Tag> Tạm trú </li>
-                  <li><Tag color='blue' >{" "}</Tag> Tạm vắng </li>
+                  <li><Tag color='green' >{" "}</Tag> Số người khỏe </li>
+                  <li><Tag color='red' >{" "}</Tag> Số người mắc </li>
                 </ul>
               </div>}
             >
+                <ThongKeLineChart/>
             </Card>
             </Col>
             <Col span={24} md={12} className="mb-24">
             <Card
                 bordered={false}
-                title={<h6 className="font-semibold m-0">Thống kê độ tuổi</h6>}
+                title={<h6 className="font-semibold m-0">Thống kê mức độ Covid</h6>}
                 className="header-solid h-full"
                 bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
             >
+                <YteEChart/>
             </Card>
             </Col>
         </Row>
