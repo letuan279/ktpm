@@ -70,26 +70,67 @@ router.post("/tach", (req, res, next) => {
 
 router.post("/thaydoi/:id", (req, res, next) => {
     const id = req.params.id;
+    var thongTinThayDoi = "";
+    var thayDoiTu = "";
+    var thayDoiThanh = "";
+    var ngayThayDoi = "";
+
     const {soHoKhau, khuVuc, diaChi, ngayLap, idChuHo} = req.body;
-    const q = `UPDATE HoKhau SET soHoKhau = '${soHoKhau}', khuVuc = '${khuVuc}', diaChi = '${diaChi}', ngayLap = '${ngayLap}', idChuHo = ${idChuHo} WHERE id = ${id}`;
-    db.query(q, (err, data) => {
-        if (err) {
-            return res.json(err);
-        } else {
-            const selectQ = 'SELECT * FROM `HoKhau` WHERE `id` = ?';
-            db.query(selectQ, [id], (err, rows) => {
-                if (err) {
+    const oldQuery = `SELECT * FROM HoKhau WHERE id = ${id}`;
+    db.query(oldQuery, (error, result) => {
+        if(error) {
+            return res.json(error);
+        }
+        else {
+            const oldData = JSON.parse(JSON.stringify(result[0]));
+            ngayThayDoi = ngayLap;
+            if (khuVuc !== oldData.khuVuc) {
+                thongTinThayDoi = `Chuyển đến khu vực ${khuVuc}`;
+                thayDoiTu = oldData.khuVuc;
+                thayDoiThanh = khuVuc;
+            }
+
+            if(diaChi !== oldData.diaChi) {
+                thongTinThayDoi = `Chuyển đến địa chỉ ${diaChi}`;
+                thayDoiTu = oldData.diaChi;
+                thayDoiThanh = diaChi;
+            }
+
+            if (idChuHo !== oldData.idChuHo) {
+                thongTinThayDoi = `Thay đổi chủ hộ`;
+                thayDoiTu = oldData.idChuHo;
+                thayDoiThanh = idChuHo;
+            }
+
+            if (soHoKhau !== oldData.soHoKhau) {
+                thongTinThayDoi = `Thay đổi số hộ khẩu`;
+                thayDoiTu = oldData.soHoKhau;
+                thayDoiThanh = soHoKhau;
+            }
+
+            const q = `UPDATE HoKhau SET soHoKhau = '${soHoKhau}', khuVuc = '${khuVuc}', diaChi = '${diaChi}', ngayLap = '${ngayLap}', idChuHo = ${idChuHo} WHERE id = ${id}; INSERT INTO ThayDoiHoKhau (nguoiThayDoi, thongTinThayDoi, thayDoiTu, thayDoiThanh, ngayThayDoi, idHoKhau) VALUES ('shy', '${thongTinThayDoi}', '${thayDoiTu}', '${thayDoiThanh}', '${ngayThayDoi}', '${idChuHo}')`;
+            db.query(q, (err, data) => {
+                if(err) {
                     return res.json(err);
-                } else {
+                }
+                else {
+                    data["id"] = id;
                     return res.json({
                         success: true,
                         message: "Thay doi thong tin HoKhau thanh cong",
-                        data: rows[0],
-                    });
+                        data: {
+                            "id": id,
+                            "soHoKhau": soHoKhau,
+                            "khuVuc": khuVuc,
+                            "diaChi": diaChi,
+                            "ngayLap": ngayLap,
+                            "idChuHo": idChuHo,
+                        }
+                    })
                 }
-            });
+            })
         }
-    })
+    });
 });
 
 router.delete("/:id", (req, res, next) => {
