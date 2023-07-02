@@ -85,4 +85,21 @@ router.get("/thongkecachly", (req, res, next) => {
     })
 });
 
+router.get("/thongke/:date", (req, res, next) => {
+    const date = req.params.date;
+    const q = `SELECT COUNT(*) AS count FROM CachLy WHERE trangThaiTest = 'Dương tính' AND thoiDiem LIKE '${date}%'`;
+    db.query(q, (err, data) => {
+        if(err) {
+            return res.json(err);
+        }
+        else {
+            return res.json({
+                success: true,
+                message: `So nguoi duong tinh tai thoi diem ${date}`,
+                data: data
+            })
+        }
+    })
+});
+
 module.exports = router;
