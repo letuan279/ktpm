@@ -16,6 +16,7 @@ import NhanKhau from "./components/nhankhau/NhanKhau";
 import TamTruTamVang from "./components/tamtrutamvang/TamTruTamVang";
 import LichSuThayDoi from "./components/lichsuthaydoi/LichSuThayDoi";
 import ThongKeDanCu from "./components/thongke/ThongKeDanCu";
+import KhaiBaoYTe from "./components/khaibaoyte/KhaiBaoYTe";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="/tam-tru-tam-vang" exact component={TamTruTamVang} />
             <Route path="/lich-su-thay-doi" exact component={LichSuThayDoi} />
             <Route path="/thong-ke-dancu" exact component={ThongKeDanCu} />
+            <Route path="/khai-bao-y-te" exact component={KhaiBaoYTe} />
             <Redirect from="*" to="/ho-khau" />
           </Main>
         </Switch>

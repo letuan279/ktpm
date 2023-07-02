@@ -12,6 +12,7 @@ import EChart from '../chart/EChart';
 import LineChart from '../chart/LineChart';
 import { useData } from '../../context/NewAppContext';
 import DoTuoiEChart from './DoTuoiEChart'
+import ThongKeTTTV from './ThongkeTTTV'
 
 const ThongKe = () => {
     const {hokhau, nhankhau} = useData();
@@ -79,17 +80,17 @@ const ThongKe = () => {
             </Col>
         </Row>
         <Row gutter={[24, 0]}>
-            <Col span={24} md={8} className="mb-24">
+            <Col span={24} md={12} className="mb-24">
             <Card
                 bordered={false}
-                title={<h6 className="font-semibold m-0">Thống kê độ tuổi</h6>}
+                title={<h6 className="font-semibold m-0">Thống kê tạm trú tạm vắng</h6>}
                 className="header-solid h-full"
                 bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
             >
-                <LineChart/>
+                <ThongKeTTTV/>
             </Card>
             </Col>
-            <Col span={24} md={16} className="mb-24">
+            <Col span={24} md={12} className="mb-24">
             <Card
                 bordered={false}
                 title={<h6 className="font-semibold m-0">Thống kê độ tuổi</h6>}

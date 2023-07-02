@@ -110,7 +110,7 @@ function EChart() {
 
   return (
     <>
-      <div id="chart">
+      <div id="chart" style={{marginTop: 40}}>
         <ReactApexChart
           className="bar-chart"
           options={options}

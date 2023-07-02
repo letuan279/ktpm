@@ -10,6 +10,7 @@ const NewAppContextProvider = ({ children }) => {
     const [tamVang, setTamVang] = useState([])
     const [lichSuHoKhau, setLichSuHoKhau] = useState([])
     const [lichSuNhanKhau, setLichSuNhanKhau] = useState([])
+    const [khaiBaoYTe, setKhaiBaoYTe] = useState([])
 
 
     const fetchDataHoKhau = async () => {
@@ -72,6 +73,16 @@ const NewAppContextProvider = ({ children }) => {
         }
     }
 
+    const fetchDataKhaiBaoYTe = async () => {
+      try {
+          const res = await fetch(`${BACK_END_URL}/yte/khaibao`);
+          const data = await res.json();
+          setKhaiBaoYTe(data.data);
+        } catch (error) {
+          console.error(error);
+        }
+    }
+
 
 
     useEffect(() => {
@@ -81,6 +92,7 @@ const NewAppContextProvider = ({ children }) => {
         fetchDataTamVang()
         fetchDataLichSuHoKhau()
         fetchDataLichSuNhanKhau()
+        fetchDataKhaiBaoYTe()
     }, [])
 
     return (
@@ -101,7 +113,9 @@ const NewAppContextProvider = ({ children }) => {
                 lichSuHoKhau, 
                 setLichSuHoKhau,
                 lichSuNhanKhau, 
-                setLichSuNhanKhau
+                setLichSuNhanKhau,
+                khaiBaoYTe,
+                fetchDataKhaiBaoYTe
             }
         }>
             {children}
