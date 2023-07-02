@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require("../connect_db");
+const { route } = require('./hoKhau');
 
 router.get("/", (req, res, next) => {
     const q = "SELECT * FROM `NhanKhau`";
@@ -246,6 +247,40 @@ router.get("/thongke/dotuoi", (req, res, next) => {
             });
         }
     })
+});
+
+router.get("/thongke/tamvang/:date", (req, res, next) => {
+    const date = req.params.date;
+    const q = `SELECT COUNT(*) AS count FROM TamVang WHERE '${date}' BETWEEN tuNgay AND denNgay`;
+    db.query(q, (err, data) => {
+        if (err) {
+            return res.json(err);
+        }
+        else {
+            return res.json({
+                success: true,
+                message: `So nguoi TamVang tai thoi diem ${date}`,
+                data: data
+            })
+        }
+    })
+});
+
+router.get("/thongke/tamtru/:date", (req, res, next) => {
+    const date = req.params.date;
+    const q = `SELECT COUNT(*) AS count FROM TamTru WHERE '${date}' <= thoiGianTamTru`;
+    db.query(q, (err, data) => {
+        if (err) {
+            return res.json(err);
+        }
+        else {
+            return res.json({
+                success: true,
+                message: `So nguoi TamTru tai thoi diem ${date}`,
+                data: data
+            })
+        }
+    })    
 });
 
 module.exports = router;
