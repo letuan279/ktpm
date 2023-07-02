@@ -108,7 +108,7 @@ router.post("/thaydoi/:id", (req, res, next) => {
                 thayDoiThanh = soHoKhau;
             }
 
-            const q = `UPDATE HoKhau SET soHoKhau = '${soHoKhau}', khuVuc = '${khuVuc}', diaChi = '${diaChi}', ngayLap = '${ngayLap}', idChuHo = ${idChuHo} WHERE id = ${id}; INSERT INTO ThayDoiHoKhau (nguoiThayDoi, thongTinThayDoi, thayDoiTu, thayDoiThanh, ngayThayDoi, idHoKhau) VALUES ('shy', '${thongTinThayDoi}', '${thayDoiTu}', '${thayDoiThanh}', '${ngayThayDoi}', '${idChuHo}')`;
+            const q = `UPDATE HoKhau SET soHoKhau = '${soHoKhau}', khuVuc = '${khuVuc}', diaChi = '${diaChi}', ngayLap = '${ngayLap}', idChuHo = ${idChuHo} WHERE id = ${id}; INSERT INTO ThayDoiHoKhau ( thongTinThayDoi, thayDoiTu, thayDoiThanh, ngayThayDoi, idHoKhau) VALUES ('${thongTinThayDoi}', '${thayDoiTu}', '${thayDoiThanh}', '${ngayThayDoi}', '${idChuHo}')`;
             db.query(q, (err, data) => {
                 if(err) {
                     return res.json(err);

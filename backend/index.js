@@ -7,6 +7,7 @@ const cors = require('cors')
 const compression = require('compression')
 const bp = require('body-parser')
 const YTeRouter = require("./routes/YTe");
+const loginRouter = require("./routes/dangNhap");
 
 dotenv.config();
 
@@ -26,6 +27,8 @@ app.use("/api/hokhau", hoKhauRouter);
 app.use("/api/nhankhau", nhanKhauRouter);
 
 app.use("/api/yte", YTeRouter);
+
+app.use("/api/dangnhap", loginRouter);
 
 app.get("/", (req, res, next) => {
     return res.json("hello from backend server");
