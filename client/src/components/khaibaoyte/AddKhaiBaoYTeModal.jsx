@@ -5,3 +5,10 @@ import { Row, Col, Card, Radio, Table, Upload, message, Progress, Button, Avatar
 import { BACK_END_URL } from '../../context/const';
 import { useData } from '../../context/NewAppContext';
 import moment from 'moment';
+
+const AddKhaiBaoYTeModal = (props) => {
+    const {
+        editModalVisible, 
+        setEditModalVisible,
+    } = props
+}

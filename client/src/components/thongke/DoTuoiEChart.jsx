@@ -103,19 +103,7 @@ function EChart() {
     const fetchAll = async () => {
       const fetchData = async (tuoiMin, tuoiMax) => {
         try {
-          const res = await fetch(`${BACK_END_URL}/nhankhau/thongke/dotuoi`, {
-            method: "GET",
-            mode: "cors",
-            cache: "no-cache",
-            credentials: "same-origin",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              tuoiMin,
-              tuoiMax
-            })
-        });
+          const res = await fetch(`${BACK_END_URL}/nhankhau/thongke/dotuoi?tuoiMin=${tuoiMin}&tuoiMax=${tuoiMax}`);
           const data = await res.json();
           return data.data.length
         } catch (error) {
@@ -132,21 +120,22 @@ function EChart() {
       const dotuoi45_60 = await fetchData(45, 60);
       const dotuoi60_70 = await fetchData(60, 70);
       const dotuoi70 = await fetchData(70, 100);
-  
-      const data = dotuoi0_6.concat(
-        dotuoi6_12,
-        dotuoi12_18,
-        dotuoi18_22,
-        dotuoi22_30,
-        dotuoi30_45,
-        dotuoi45_60,
-        dotuoi60_70,
-        dotuoi70
-      );
+
+
+      const data = []
+      data.push(dotuoi0_6)
+      data.push(dotuoi6_12)
+      data.push(dotuoi12_18)
+      data.push(dotuoi18_22)
+      data.push(dotuoi22_30)
+      data.push(dotuoi30_45)
+      data.push(dotuoi45_60)
+      data.push(dotuoi60_70)
+      data.push(dotuoi70)
       
       setDataAge(data);
     }
-    // fetchAll()
+    fetchAll()
   }, [])
 
   const series = [

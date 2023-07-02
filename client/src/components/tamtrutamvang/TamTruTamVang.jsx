@@ -148,7 +148,7 @@ const TamTruTamVang = () => {
                             <Space>
                                 <Button type="primary" onClick={handleAddTamVang}>Xin giấy tạm vắng</Button>
                                 <Input 
-                                placeholder='Số giấy tạm trú'
+                                placeholder='Số giấy tạm vắng'
                                 onChange={(e) => SetSearchTamVang(e.target.value)}
                                 width={600}
                                 />

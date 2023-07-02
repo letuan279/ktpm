@@ -181,6 +181,19 @@ function Sidenav({ color }) {
             <span className="label">Cách ly</span>
           </NavLink>
         </Menu.Item>
+        <Menu.Item key="7">
+          <NavLink to="/thong-ke-yte">
+            <span
+              className="icon"
+              style={{
+                background: page === "/thong-ke-yte" ? color : "",
+              }}
+            >
+              {billing}
+            </span>
+            <span className="label">Thống kê</span>
+          </NavLink>
+        </Menu.Item>
         {/* <Menu.Item key="5">
           <NavLink to="/profile">
             <span

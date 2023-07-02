@@ -18,6 +18,7 @@ import LichSuThayDoi from "./components/lichsuthaydoi/LichSuThayDoi";
 import ThongKeDanCu from "./components/thongke/ThongKeDanCu";
 import KhaiBaoYTe from "./components/khaibaoyte/KhaiBaoYTe";
 import CachLy from "./components/cachly/CachLy";
+import ThongKeYTe from "./components/thongkeyte/ThongKeYTe";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/tam-tru-tam-vang" exact component={TamTruTamVang} />
             <Route path="/lich-su-thay-doi" exact component={LichSuThayDoi} />
             <Route path="/thong-ke-dancu" exact component={ThongKeDanCu} />
+            <Route path="/thong-ke-yte" exact component={ThongKeYTe} />
             <Route path="/khai-bao-y-te" exact component={KhaiBaoYTe} />
             <Route path="/cach-ly" exact component={CachLy} />
             <Redirect from="*" to="/ho-khau" />
