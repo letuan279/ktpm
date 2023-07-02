@@ -87,7 +87,12 @@ router.get("/thongkecachly", (req, res, next) => {
 
 router.get("/thongke/:date", (req, res, next) => {
     const date = req.params.date;
-    const q = `SELECT COUNT(*) AS count FROM CachLy WHERE trangThaiTest = 'Dương tính' AND thoiDiem LIKE '${date}%'`;
+    const q = `SELECT COUNT(*) as count FROM CachLy
+                        WHERE id IN (SELECT MAX(id) AS id
+                        FROM CachLy WHERE thoiDiem <= '${date}' 
+                        GROUP BY idNhanKhau )
+                        AND trangThaiTest = 'Dương tính'
+                        ORDER BY id desc`;
     db.query(q, (err, data) => {
         if(err) {
             return res.json(err);

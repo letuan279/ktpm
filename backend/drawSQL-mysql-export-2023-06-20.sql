@@ -126,7 +126,9 @@ INSERT INTO KhaiBaoYTe (idNhanKhau, hanhTrinh, trieuChung, ngayKhaiBao, doiTuong
 INSERT INTO CachLy (idNhanKhau, hinhThucTest, thoiDiem, mucDoCovid, trangThaiTest) VALUES
 (1, 'Test PCR', '2022-01-02', 'F0', 'Âm tính'),
 (2, 'Test nhanh', '2021-08-02', 'F1', 'Dương tính'),
-(4, 'Test PCR', '2023-06-01', 'F0', 'Âm tính');
+(2, 'Test nhanh', '2021-08-05', 'F0', 'Âm tính'),
+(4, 'Test PCR', '2023-06-01', 'F0', 'Âm tính'),
+(4, 'Test PCR', '2023-06-10', 'F0', 'Dương tính');
 
 INSERT INTO ThayDoiNhanKhau (ngayChuyen, noiChuyen, ghiChu, idNhanKhau) VALUES
 ('2022-01-01', 'Chuyển đến số 1, đường XYZ', 'Chuyển nhà', 1),
