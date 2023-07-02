@@ -182,6 +182,8 @@ function Header({
     if (input === "lich-su-thay-doi") return "Lịch sử thay đổi nhân khẩu"
     if (input === "khai-bao-y-te") return "Danh sách khai báo y tế"
     if (input === "cach-ly") return "Tình trạng cách ly"
+    if (input === "tam-tru-tam-vang") return "Tạm trú tạm vắng"
+    if (input === "thong-ke-dancu") return "Thống kê dân cư"
     else return "hehe"
   }
 

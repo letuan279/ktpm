@@ -40,15 +40,6 @@ const NhanKhau = () => {
         return hokhau.filter(i => i.id === item)[0].soHoKhau
       }
     },
-    // {
-    //   title: 'Biệt danh',
-    //   dataIndex: 'bietDanh',
-    //   key: 'bietDanh',
-    //   render: item => {
-    //     if(!item) return "Không có"
-    //     return item
-    //   }
-    // },
     {
       title: 'Giới tính',
       dataIndex: 'gioiTinh',

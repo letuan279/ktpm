@@ -54,7 +54,7 @@ const NewAppContextProvider = ({ children }) => {
 
     const fetchDataLichSuHoKhau = async () => {
       try {
-          const res = await fetch(`${BACK_END_URL}/nhankhau/thongke/tamvang`);
+          const res = await fetch(`${BACK_END_URL}/hokhau/thaydoi/hokhau`);
           const data = await res.json();
           setLichSuHoKhau(data.data);
         } catch (error) {
@@ -64,7 +64,7 @@ const NewAppContextProvider = ({ children }) => {
 
     const fetchDataLichSuNhanKhau = async () => {
       try {
-          const res = await fetch(`${BACK_END_URL}/nhankhau/thongke/tamvang`);
+          const res = await fetch(`${BACK_END_URL}/nhankhau/thaydoi/nhankhau`);
           const data = await res.json();
           setLichSuNhanKhau(data.data);
         } catch (error) {

@@ -14,6 +14,8 @@ import NewAppContextProvider from "./context/NewAppContext";
 import HoKhau from "./components/hokhau/HoKhau";
 import NhanKhau from "./components/nhankhau/NhanKhau";
 import TamTruTamVang from "./components/tamtrutamvang/TamTruTamVang";
+import LichSuThayDoi from "./components/lichsuthaydoi/LichSuThayDoi";
+import ThongKeDanCu from "./components/thongke/ThongKeDanCu";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
             <Route path="/ho-khau" exact component={HoKhau} />
             <Route path="/nhan-khau" exact component={NhanKhau} />
             <Route path="/tam-tru-tam-vang" exact component={TamTruTamVang} />
+            <Route path="/lich-su-thay-doi" exact component={LichSuThayDoi} />
+            <Route path="/thong-ke-dancu" exact component={ThongKeDanCu} />
             <Redirect from="*" to="/ho-khau" />
           </Main>
         </Switch>
