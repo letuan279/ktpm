@@ -230,7 +230,8 @@ router.get("/thongke/gioitinhnu", (req, res, next) => {
 
 router.get("/thongke/dotuoi", (req, res, next) => {
     const currentDate = new Date().toISOString().split('T')[0];
-    const {tuoiMin, tuoiMax} = req.body;
+    const {tuoiMin, tuoiMax} = req.query;
+    console.log(tuoiMin);
     const q = `SELECT nk.* FROM NhanKhau nk LEFT JOIN TamVang tv ON nk.id = tv.idNhanKhau WHERE (tv.idNhanKhau IS NULL OR tv.denNgay < '${currentDate}') AND ngaySinh >= DATE_SUB(CURRENT_DATE, INTERVAL ${tuoiMax} YEAR)
              AND ngaySinh <= DATE_SUB(CURRENT_DATE, INTERVAL ${tuoiMin} YEAR) AND nk.trangThai != 'Đã qua đời'`;
     db.query(q, (err, data) => {

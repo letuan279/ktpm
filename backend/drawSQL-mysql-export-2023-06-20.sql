@@ -72,6 +72,13 @@ CREATE TABLE `TamTru`(
     `ngheNghiep` VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE `NguoiDung` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `userName` VARCHAR(255) NOT NULL,
+    `passWord` VARCHAR(255) NOT NULL,
+    `role` SMALLINT NOT NULL
+);
+
 ALTER TABLE
     `NhanKhau` ADD CONSTRAINT `nhankhau_idhokhau_foreign` FOREIGN KEY(`idHoKhau`) REFERENCES `HoKhau`(`id`);
 ALTER TABLE
@@ -130,3 +137,10 @@ INSERT INTO TamTru (soGiayTamTru, lyDo, thoiGianTamTru, HoTen, soCMND, ngaySinh,
 ('TT001', 'Công tác', '2022-01-01', 'Nguyen Van A', '123456789', '1990-01-01', 1, 'Kỹ sư'),
 ('TT002', 'Học tập', '2021-08-01', 'Pham Van C', '345678901', '2002-12-25', 1, 'Sinh viên'),
 ('TT003', 'Khám bệnh', '2023-06-01', 'Hoang Van E', '567890123', '1988-03-20', 1, 'Nhà văn');
+
+INSERT INTO NguoiDung (userName, passWord, role) VALUES 
+('tien1', '123456', 0),
+('anhtuan', 'lat123', 1),
+('minhtuan', 'tuana8tmt', 0),
+('nghia', 'khangbacninh', 1),
+('dat', 'dat123', 1);
