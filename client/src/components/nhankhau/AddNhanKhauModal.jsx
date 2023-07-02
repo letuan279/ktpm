@@ -108,18 +108,6 @@ const AddNhanKhauModal = (props) => {
                     >
                         <Input></Input>
                     </Form.Item>
-                    <Form.Item
-                        label="Trạng thái"
-                        name="trangThai"
-                        rules={[
-                            { required: true, message: "Hãy điền trường này" }
-                        ]}
-                    >
-                        <Radio.Group>
-                            <Radio value={"Đang ở"}>Đang ở</Radio>
-                            <Radio value={"Tạm vắng"}>Tạm vắng</Radio>
-                        </Radio.Group>
-                    </Form.Item>
                 </Form>
             </Modal>
         );
@@ -134,6 +122,7 @@ const AddNhanKhauModal = (props) => {
             if(!values.ngheNghiep) values.ngheNghiep = "Không có"
             if(!values.bietDanh) values.bietDanh = "Không có"
             values.ngaySinh = values.ngaySinh.format("YYYY-MM-DD")
+            values.trangThai = "Đang ở"
             
             // console.log(values);
 

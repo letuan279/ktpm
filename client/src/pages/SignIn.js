@@ -92,9 +92,9 @@ const SignIn = () => {
         <Content className="signin" style={{ minHeight: "100vh" }}>
           <Row justify="space-around">
             <Col style={{ marginTop: "50px" }}>
-              <Title className="mb-15" style={{ marginLeft: '125px' }}>QLCV</Title>
+              <Title className="mb-15" style={{ marginLeft: '125px' }}>QLDC</Title>
               <Title className="font-regular text-muted" level={5}>
-                Hãy để chúng tôi quản lý công việc của bạn
+                Vì một xã hội số văn minh và hiện đại hóa
               </Title>
               <Form
                 layout="vertical"
@@ -102,7 +102,7 @@ const SignIn = () => {
               >
                 <Form.Item
                   className="username"
-                  label="Email"
+                  label="Tài khoản"
                   name="email"
                   rules={[
                     {

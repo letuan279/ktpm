@@ -6,18 +6,19 @@ import { BACK_END_URL } from '../../context/const';
 import { useData } from '../../context/NewAppContext';
 import moment from 'moment';
 
-const AddKhaiBaoYTeModal = (props) => {
+const AddCachLyModal
+ = (props) => {
     const {
         editModalVisible, 
         setEditModalVisible,
     } = props
 
-    const {nhankhau, khaiBaoYTe, fetchDataKhaiBaoYTe} = useData();
+    const {nhankhau, cachLy, fetchDataCachLy} = useData();
 
     const AddForm = ({ visible, onCreate, onCancel, initialValues }) => {
         const [form] = Form.useForm();
         return (
-            <Modal visible={visible} title="Khai báo y tế" okText="Lưu" cancelText="Hủy" onCancel={onCancel} onOk={() => {
+            <Modal visible={visible} title="Khai báo cách ly" okText="Lưu" cancelText="Hủy" onCancel={onCancel} onOk={() => {
                 form.validateFields().then((values) => {
                     form.resetFields();
                     onCreate(values);
@@ -27,7 +28,7 @@ const AddKhaiBaoYTeModal = (props) => {
             }}>
                 <Form form={form} layout="vertical">
                 <Form.Item
-                        label="Chọn người khai báo y tế theo soCMND"
+                        label="Chọn người khai báo cách ly theo số CMND"
                         name="idNhanKhau"
                         rules={[
                             { required: true, message: "Hãy điền trường này" }
@@ -58,43 +59,54 @@ const AddKhaiBaoYTeModal = (props) => {
                     </Form.Item> */}
                     
                     <Form.Item
-                        label="Hành Trình"
-                        name="hanhTrinh"
+                        label="Hình thức Test"
+                        name="hinhThucTest"
                         rules={[
                             { required: true, message: "Hãy điền trường này" }
                         ]}
                     >
-                         <Input></Input>
-                    </Form.Item>
-                   
-                    <Form.Item
-                        label="Triệu chứng"
-                        name="trieuChung"
-                        rules={[
-                            { required: true, message: "Hãy điền trường này" }
-                        ]}
-                    >
-                        <Input></Input>
+                          <Radio.Group>
+                            <Radio value={"Test nhanh"}>Test nhanh</Radio>
+                            <Radio value={"Test PCR"}>Test PCR</Radio>
+                        </Radio.Group>
                     </Form.Item>
 
                     <Form.Item
-                        label="Đối tượng tiếp xúc"
-                        name="doiTuongTiepXuc"
-                        rules={[
-                            { required: true, message: "Hãy điền trường này" }
-                        ]}
-                    >
-                        <Input></Input>
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Ngày khai báo"
-                        name="ngayKhaiBao"
+                        label="Thời điểm"
+                        name="thoiDiem"
                         rules={[
                             { required: true, message: "Hãy điền trường này" }
                         ]}
                     >
                         <DatePicker></DatePicker>
+                    </Form.Item>
+
+                    <Form.Item
+                    label="Mức độ Covid"
+                    name="mucDoCovid"
+                    rules={[
+                        { required: true, message: "Hãy điền trường này" }
+                    ]}
+                    >
+                        <Radio.Group>
+                            <Radio value={"F0"}>F0</Radio>
+                            <Radio value={"F1"}>F1</Radio>
+                            <Radio value={"F2"}>F2</Radio>
+                            <Radio value={"F3"}>F3</Radio>
+                        </Radio.Group>
+                    </Form.Item>
+
+                    <Form.Item
+                    label="Trạng thái Test"
+                    name="trangThaiTest"
+                    rules={[
+                        { required: true, message: "Hãy điền trường này" }
+                    ]}
+                    >
+                        <Radio.Group>
+                            <Radio value={"Âm tính"}>Âm tính</Radio>
+                            <Radio value={"Dương tính"}>Dương tính</Radio>
+                        </Radio.Group>
                     </Form.Item>
 
                 </Form>
@@ -107,8 +119,8 @@ const AddKhaiBaoYTeModal = (props) => {
         try {
             // values.soGiayTamTru = `TT00${tamTru.length + 1}`
             // values.ngaySinh = values.ngaySinh.format("YYYY-MM-DD")
-            values.ngayKhaiBao = values.ngayKhaiBao.format("YYYY-MM-DD")
-            const res = await fetch(`${BACK_END_URL}/yte/khaibao`, {
+            values.thoiDiem = values.thoiDiem.format("YYYY-MM-DD")
+            const res = await fetch(`${BACK_END_URL}/yte/cachly`, {
                 method: "POST",
                 mode: "cors",
                 cache: "no-cache",
@@ -120,9 +132,12 @@ const AddKhaiBaoYTeModal = (props) => {
             });
             const data = await res.json();
             if(data.success === true){
-                fetchDataKhaiBaoYTe()
-                message.success("Khai báo y tế thành công!")
+                fetchDataCachLy()
+                message.success("Khai báo cách ly thành công!")
                 setEditModalVisible(false);
+            }
+            else{
+                message.error("Khai báo lỗi");
             }
           } catch (error) {
             console.error(error);
@@ -142,4 +157,4 @@ const AddKhaiBaoYTeModal = (props) => {
     )
 }
 
-export default AddKhaiBaoYTeModal
+export default AddCachLyModal

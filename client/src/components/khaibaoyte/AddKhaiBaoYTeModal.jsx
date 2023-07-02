@@ -27,7 +27,7 @@ const AddKhaiBaoYTeModal = (props) => {
             }}>
                 <Form form={form} layout="vertical">
                 <Form.Item
-                        label="Chọn người khai báo y tế theo soCMND"
+                        label="Chọn người khai báo y tế theo số CMND"
                         name="idNhanKhau"
                         rules={[
                             { required: true, message: "Hãy điền trường này" }
@@ -47,7 +47,7 @@ const AddKhaiBaoYTeModal = (props) => {
                          ></Select>
                 </Form.Item>
 
-                {/* <Form.Item
+                <Form.Item
                         label="Họ và tên"
                         // name="doiTuongTiepXuc"
                         // rules={[
@@ -55,7 +55,7 @@ const AddKhaiBaoYTeModal = (props) => {
                         // ]}
                     >
                         <Input></Input>
-                    </Form.Item> */}
+                    </Form.Item>
                     
                     <Form.Item
                         label="Hành Trình"
@@ -123,6 +123,9 @@ const AddKhaiBaoYTeModal = (props) => {
                 fetchDataKhaiBaoYTe()
                 message.success("Khai báo y tế thành công!")
                 setEditModalVisible(false);
+            }
+            else{
+                message.error("Khai báo không thành công!");
             }
           } catch (error) {
             console.error(error);

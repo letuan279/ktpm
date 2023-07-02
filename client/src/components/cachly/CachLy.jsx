@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from 'react'
 import { useData } from '../../context/NewAppContext';
 import { Card, Table, Row, Col, Button, Input, Modal, Descriptions, Tag, Space } from 'antd';
 import moment from 'moment';
+import AddCachLyModal from "./AddCachLyModal";
 
 const CachLy = () => {
 
@@ -40,6 +41,16 @@ const CachLy = () => {
         },
     ]
 
+    useEffect(() => {
+        fetchDataCachLy()
+    }, [])
+
+       // Add modal CachLy
+       const [addKhaiBaoCachLyModalVisible, setAddKhaiBaoCachLyModalVisible] = useState(false);
+       const handleAddKhaiBaoCachLy = () => {
+           setAddKhaiBaoCachLyModalVisible(true);
+       };
+
     return (
         <>
         <div className="tabled">
@@ -51,11 +62,9 @@ const CachLy = () => {
                     title="Thông tin về cách ly"
                     extra={
                         <Space>
-                            {/* <Input 
-                            placeholder='Nhập tên nk/CMND'
-                            onChange={(e) => setSearch(e.target.value)}
-                            width={600}
-                            /> */}
+                            <Space>
+                           <Button type="primary" onClick={handleAddKhaiBaoCachLy}>Khai báo cách ly</Button>
+                        </Space>
                         </Space>
                     }>
                     <Table 
@@ -63,11 +72,15 @@ const CachLy = () => {
                         columns={columsCachLy} 
                         dataSource={cachLy}
                         className="ant-border-space"
-                        scroll={{ y: 200 }}
+                        // scroll={{ y: 200 }}
                     />
                     </Card>
                 </Col>
             </Row>
+            {addKhaiBaoCachLyModalVisible && <AddCachLyModal 
+                    editModalVisible={addKhaiBaoCachLyModalVisible}
+                    setEditModalVisible={setAddKhaiBaoCachLyModalVisible}
+                />}
         </div>
         </>
     )

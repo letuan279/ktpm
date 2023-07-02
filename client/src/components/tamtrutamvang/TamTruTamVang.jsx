@@ -11,6 +11,18 @@ const TamTruTamVang = () => {
 
     const columnsTamTru = [
         {
+            title: 'Họ và tên',
+            dataIndex: 'HoTen',
+            key: 'HoTen',
+            width: '15%'
+        },
+        {
+            title: 'Số CMND',
+            dataIndex: 'soCMND',
+            key: 'soCMND',
+            width: '15%'
+        },
+        {
             title: 'Số giấy tạm trú',
             dataIndex: 'soGiayTamTru',
             key: 'soGiayTamTru',
@@ -20,26 +32,31 @@ const TamTruTamVang = () => {
             title: 'Lý do',
             dataIndex: 'lyDo',
             key: 'lyDo',
+            width: '15%'
         },
         {
             title: 'Thời gian tạm trú',
             dataIndex: 'thoiGianTamTru',
             key: 'thoiGianTamTru',
-            render: item => moment(item).format('DD-MM-YYYY')
+            render: item => moment(item).format('DD-MM-YYYY'),
+            width: '15%'
         },
+       
+    ]
+
+    const columnsTamVang = [
         {
             title: 'Họ và tên',
-            dataIndex: 'HoTen',
-            key: 'HoTen',
+            dataIndex: 'hoTen',
+            key: 'hoTen',
+            width: '15%'
         },
         {
             title: 'Số CMND',
             dataIndex: 'soCMND',
             key: 'soCMND',
-        }
-    ]
-
-    const columnsTamVang = [
+            width: '15%'
+        },
         {
             title: 'Số giấy tạm vắng',
             dataIndex: 'soGiayTamVang',
@@ -66,18 +83,7 @@ const TamTruTamVang = () => {
             width: '15%',
             render: item => moment(item).format('DD-MM-YYYY')
         },
-        {
-            title: 'Họ và tên',
-            dataIndex: 'hoTen',
-            key: 'hoTen',
-            width: '15%'
-        },
-        {
-            title: 'Số CMND',
-            dataIndex: 'soCMND',
-            key: 'soCMND',
-            width: '15%'
-        },
+    
     ]
 
     useEffect(() => {

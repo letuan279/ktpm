@@ -40,7 +40,7 @@ const TachHoKhauModal = (props) => {
                 });
             }}>
                 <Form form={form} layout="vertical">
-                    <Form.Item
+                    {/* <Form.Item
                         label="Số hộ khẩu"
                         name="soHoKhau"
                         rules={[
@@ -48,7 +48,7 @@ const TachHoKhauModal = (props) => {
                         ]}
                     >
                         <Input></Input>
-                    </Form.Item>
+                    </Form.Item> */}
                     <Form.Item
                         label="Khu vực"
                         name="khuVuc"
@@ -101,6 +101,7 @@ const TachHoKhauModal = (props) => {
     const handleTach = async (values) => {
         const fetchData = async () => {
         try {
+            values.soHoKhau = `HK00` + (hokhau.length + 1)
             const res = await fetch(`${BACK_END_URL}/hokhau/tach`, {
                 method: "POST",
                 mode: "cors",

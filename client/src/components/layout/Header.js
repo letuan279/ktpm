@@ -16,6 +16,7 @@ import {
   Typography,
   Switch,
   Tag,
+  Tooltip
 } from "antd";
 
 import {
@@ -212,10 +213,24 @@ function Header({
           </div>
         </Col>
         <Col span={24} md={18} className="header-control">
+          {/* <Badge size="small" count={4}>
+            <Dropdown overlay={menu} trigger={["click"]}>
+              <a
+                href="#pablo"
+                className="ant-dropdown-link"
+                onClick={(e) => e.preventDefault()}
+              >
+                {bell}
+              </a>
+            </Dropdown>
+          </Badge> */}
           <Link to="/dang-nhap" className="btn-sign-in">
             {profile}
-            <span>Lê Anh Tuấn</span>
+            <Tooltip placement="top" title={"Đăng xuất"}>
+              <span>Lê Anh Tuấn</span>
+            </Tooltip>
           </Link>
+
           <Tag color="green" >Tổ trưởng</Tag>
         </Col>
       </Row>

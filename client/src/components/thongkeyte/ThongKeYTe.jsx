@@ -103,8 +103,8 @@ const ThongKeYTe = () => {
                 bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
                 extra={<div className="sales">
                 <ul style={{display: 'flex', gap: 10}}>
-                  <li><Tag color='green' >{" "}</Tag> Số người khỏe </li>
-                  <li><Tag color='red' >{" "}</Tag> Số người mắc </li>
+                  <li><Tag color='blue' >{" "}</Tag> Số người khỏe </li>
+                  <li><Tag color='green' >{" "}</Tag> Số người mắc </li>
                 </ul>
               </div>}
             >

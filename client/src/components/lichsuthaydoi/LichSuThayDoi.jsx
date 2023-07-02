@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useData } from '../../context/NewAppContext';
 import { Card, Table, Row, Col, Button, Input, Modal, Descriptions, Tag, Space } from 'antd';
 import moment from 'moment';
@@ -6,6 +6,11 @@ import moment from 'moment';
 const LichSuThayDoi = () => {
 
   const{lichSuHoKhau, fetchDataLichSuHoKhau,lichSuNhanKhau, fetchDataLichSuNhanKhau, nhankhau, hokhau} = useData();
+
+  useEffect(() => {
+    fetchDataLichSuHoKhau()
+    fetchDataLichSuNhanKhau()
+  }, [])
 
   const columnsLichSuHoKhau = [
     {
@@ -15,6 +20,12 @@ const LichSuThayDoi = () => {
       render: item => {
         return hokhau.find(e => e.id === item).soHoKhau
       }
+    },
+    {
+      title: 'Ngày thay đổi',
+      dataIndex: 'ngayThayDoi',
+      key: 'ngayThayDoi',
+      render: item => moment(item).format('DD-MM-YYYY')
     },
     {
       title: 'Thông tin thay đổi',
@@ -31,12 +42,7 @@ const LichSuThayDoi = () => {
       dataIndex: 'thayDoiThanh',
       key: 'thayDoiThanh',
     },
-    {
-      title: 'Ngày thay đổi',
-      dataIndex: 'ngayThayDoi',
-      key: 'ngayThayDoi',
-      render: item => moment(item).format('DD-MM-YYYY')
-    },
+   
  
   ]
 

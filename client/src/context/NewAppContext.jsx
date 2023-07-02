@@ -132,6 +132,8 @@ const NewAppContextProvider = ({ children }) => {
                 fetchDataKhaiBaoYTe,
                 cachLy,
                 fetchDataCachLy,
+                fetchDataLichSuNhanKhau,
+                fetchDataLichSuHoKhau
             }
         }>
             {children}
