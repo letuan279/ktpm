@@ -1,7 +1,6 @@
-
-
+import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
-import { Row, Col, Typography } from "antd";
+import { BACK_END_URL } from "../../context/const";
 
 function EChart() {
 
@@ -10,7 +9,6 @@ function EChart() {
       type: "bar",
       width: "100%",
       height: "auto",
-
       toolbar: {
         show: false,
       },
@@ -37,15 +35,15 @@ function EChart() {
     },
     xaxis: {
       categories: [
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
+        "0-6",
+        "6-12",
+        "12-18",
+        "18-22",
+        "22-30",
+        "30-45",
+        "45-60",
+        "60-70",
+        "70+",
       ],
       labels: {
         show: true,
@@ -94,16 +92,67 @@ function EChart() {
     tooltip: {
       y: {
         formatter: function (val) {
-          return "$ " + val + " thousands";
+          return val;
         },
       },
     },
   }
 
+  const [dataAge, setDataAge] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0])
+  useEffect(() => {
+    const fetchAll = async () => {
+      const fetchData = async (tuoiMin, tuoiMax) => {
+        try {
+          const res = await fetch(`${BACK_END_URL}/nhankhau/thongke/dotuoi`, {
+            method: "GET",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              tuoiMin,
+              tuoiMax
+            })
+        });
+          const data = await res.json();
+          return data.data.length
+        } catch (error) {
+          console.error(error);
+        }
+      }
+  
+      const dotuoi0_6 = await fetchData(0, 6);
+      const dotuoi6_12 = await fetchData(6, 12);
+      const dotuoi12_18 = await fetchData(12, 18);
+      const dotuoi18_22 = await fetchData(18, 22);
+      const dotuoi22_30 = await fetchData(22, 30);
+      const dotuoi30_45 = await fetchData(30, 45);
+      const dotuoi45_60 = await fetchData(45, 60);
+      const dotuoi60_70 = await fetchData(60, 70);
+      const dotuoi70 = await fetchData(70, 100);
+  
+      const data = dotuoi0_6.concat(
+        dotuoi6_12,
+        dotuoi12_18,
+        dotuoi18_22,
+        dotuoi22_30,
+        dotuoi30_45,
+        dotuoi45_60,
+        dotuoi60_70,
+        dotuoi70
+      );
+      
+      setDataAge(data);
+    }
+    // fetchAll()
+  }, [])
+
   const series = [
     {
       name: "Số người",
-      data: [450, 200, 100, 220, 500, 100, 400, 230, 500],
+      data: dataAge,
       color: "#fff",
     },
   ]

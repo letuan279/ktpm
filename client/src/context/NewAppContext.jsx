@@ -11,6 +11,7 @@ const NewAppContextProvider = ({ children }) => {
     const [lichSuHoKhau, setLichSuHoKhau] = useState([])
     const [lichSuNhanKhau, setLichSuNhanKhau] = useState([])
     const [khaiBaoYTe, setKhaiBaoYTe] = useState([])
+    const [cachLy, setCachLy] = useState([])
 
 
     const fetchDataHoKhau = async () => {
@@ -84,6 +85,18 @@ const NewAppContextProvider = ({ children }) => {
     }
 
 
+    
+    const fetchDataCachLy = async () => {
+      try {
+          const res = await fetch(`${BACK_END_URL}/yte/cachly`);
+          const data = await res.json();
+          setCachLy(data.data);
+        } catch (error) {
+          console.error(error);
+        }
+    }
+
+
 
     useEffect(() => {
         fetchDataHoKhau()
@@ -93,6 +106,7 @@ const NewAppContextProvider = ({ children }) => {
         fetchDataLichSuHoKhau()
         fetchDataLichSuNhanKhau()
         fetchDataKhaiBaoYTe()
+        fetchDataCachLy()
     }, [])
 
     return (
@@ -115,7 +129,9 @@ const NewAppContextProvider = ({ children }) => {
                 lichSuNhanKhau, 
                 setLichSuNhanKhau,
                 khaiBaoYTe,
-                fetchDataKhaiBaoYTe
+                fetchDataKhaiBaoYTe,
+                cachLy,
+                fetchDataCachLy,
             }
         }>
             {children}

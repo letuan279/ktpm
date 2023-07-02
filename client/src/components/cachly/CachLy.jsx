@@ -3,44 +3,41 @@ import { useData } from '../../context/NewAppContext';
 import { Card, Table, Row, Col, Button, Input, Modal, Descriptions, Tag, Space } from 'antd';
 import moment from 'moment';
 
-const KhaiBaoYTe = () => {
+const CachLy = () => {
 
-    const {khaiBaoYTe, fetchDataKhaiBaoYTe, nhankhau} = useData();
+    const {cachLy, fetchDataCachLy, nhankhau} = useData();
 
-    const columsKhaiBaoYTe = [
+    const columsCachLy = [
         {
-            title: 'Họ và tên',
+            title: 'ID nhân khẩu',
             dataIndex: 'idNhanKhau',
             key: 'idNhanKhau',
-            width: '12%',
+            width: '15%',
             render: item => {
                 return nhankhau.find(e => e.id === item).hoTen
               }
         },
         {
-            title: 'Hành trình',
-            dataIndex: 'hanhTrinh',
-            key: 'hanhTrinh',
-            width: '15%'
+            title: 'Hình thức test',
+            dataIndex: 'hinhThucTest',
+            key: 'hinhThucTest',
         },
         {
-            title: 'Triệu chứng',
-            dataIndex: 'trieuChung',
-            key: 'trieuChung',
-        },
-        {
-            title: 'Ngày khai báo',
-            dataIndex: 'ngayKhaiBao',
-            key: 'ngayKhaiBao',
+            title: 'Thời điểm',
+            dataIndex: 'thoiDiem',
+            key: 'thoiDiem',
             render: item => moment(item).format('DD-MM-YYYY')
         },
         {
-            title: 'Đối tượng tiếp xúc',
-            dataIndex: 'doiTuongTiepXuc',
-            key: 'doiTuongTiepXuc',
+            title: 'Mức độ covid',
+            dataIndex: 'mucDoCovid',
+            key: 'mucDoCovid',
         },
-        
-
+        {
+            title: 'Trạng thái test',
+            dataIndex: 'trangThaiTest',
+            key: 'trangThaiTest',
+        },
     ]
 
     return (
@@ -51,7 +48,7 @@ const KhaiBaoYTe = () => {
                 <Card
                     bordered={false}
                     className="criclebox tablespace mb-24"
-                    title="Thông tin về khai báo y tế"
+                    title="Thông tin về cách ly"
                     extra={
                         <Space>
                             {/* <Input 
@@ -63,8 +60,8 @@ const KhaiBaoYTe = () => {
                     }>
                     <Table 
                         pagination={false} 
-                        columns={columsKhaiBaoYTe} 
-                        dataSource={khaiBaoYTe}
+                        columns={columsCachLy} 
+                        dataSource={cachLy}
                         className="ant-border-space"
                         scroll={{ y: 200 }}
                     />
@@ -76,4 +73,4 @@ const KhaiBaoYTe = () => {
     )
 }
 
-export default KhaiBaoYTe
+export default CachLy

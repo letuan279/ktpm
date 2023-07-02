@@ -6,7 +6,8 @@ import {
     Typography,
     Space,
     Image,
-    Avatar
+    Avatar,
+    Tag
 } from "antd";
 import EChart from '../chart/EChart';
 import LineChart from '../chart/LineChart';
@@ -86,6 +87,12 @@ const ThongKe = () => {
                 title={<h6 className="font-semibold m-0">Thống kê tạm trú tạm vắng</h6>}
                 className="header-solid h-full"
                 bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
+                extra={<div className="sales">
+                <ul style={{display: 'flex', gap: 10}}>
+                  <li><Tag color='green' >{" "}</Tag> Tạm trú </li>
+                  <li><Tag color='blue' >{" "}</Tag> Tạm vắng </li>
+                </ul>
+              </div>}
             >
                 <ThongKeTTTV/>
             </Card>

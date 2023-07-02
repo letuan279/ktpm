@@ -9,6 +9,14 @@ const LichSuThayDoi = () => {
 
   const columnsLichSuHoKhau = [
     {
+      title: 'Số hộ khẩu',
+      dataIndex: 'idHoKhau',
+      key: 'idHoKhau',
+      render: item => {
+        return hokhau.find(e => e.id === item).soHoKhau
+      }
+    },
+    {
       title: 'Thông tin thay đổi',
       dataIndex: 'thongTinThayDoi',
       key: 'thongTinThayDoi',
@@ -29,17 +37,18 @@ const LichSuThayDoi = () => {
       key: 'ngayThayDoi',
       render: item => moment(item).format('DD-MM-YYYY')
     },
-    {
-      title: 'Số hộ khẩu',
-      dataIndex: 'idHoKhau',
-      key: 'idHoKhau',
-      render: item => {
-        return hokhau.find(e => e.id === item).soHoKhau
-      }
-    },
+ 
   ]
 
   const columnsLichSuNhanKhau = [
+    {
+      title: 'Họ và tên',
+      dataIndex: 'idNhanKhau',
+      key: 'idNhanKhau',
+      render: item => {
+        return nhankhau.find(e => e.id === item).hoTen
+      }
+    },
     {
       title: 'Ngày chuyển',
       dataIndex: 'ngayChuyen',
@@ -56,14 +65,7 @@ const LichSuThayDoi = () => {
       dataIndex: 'ghiChu',
       key: 'ghiChu',
     },
-    {
-      title: 'Họ và tên',
-      dataIndex: 'idNhanKhau',
-      key: 'idNhanKhau',
-      render: item => {
-        return nhankhau.find(e => e.id === item).hoTen
-      }
-    },
+  
   ]
 
   return (

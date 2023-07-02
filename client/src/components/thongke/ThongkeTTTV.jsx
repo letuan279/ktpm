@@ -93,13 +93,6 @@ function ThongKeTTTV() {
 
   return (
     <>
-      <div className="sales">
-          <ul style={{display: 'flex', gap: 10}}>
-            <li><Tag color='green' >{" "}</Tag> Traffic</li>
-            <li><Tag color='blue' >{" "}</Tag> Sales</li>
-          </ul>
-        </div>
-
       <ReactApexChart
         className="full-width"
         options={options}
