@@ -4,6 +4,7 @@
 import { Menu, Button } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
+import { useData } from "../../context/NewAppContext";
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
@@ -76,82 +77,84 @@ function Sidenav({ color }) {
     </svg>,
   ];
 
+  const { user } = useData()
+
   return (
     <>
       <div className="brand">
         <img src={logo} alt="" />
-        <span style={{ marginLeft: "8px", fontWeight: 800 }}>QLCV</span>
+        <span style={{ marginLeft: "8px", fontWeight: 800 }}>QLDC</span>
       </div>
       <hr />
       <Menu theme="light" mode="inline">
-        <Menu.Item className="menu-item-header" key="5">
+        {user.role === 1 && <> <Menu.Item className="menu-item-header" key="5">
           Quản lý dân cư
         </Menu.Item>
-        <Menu.Item key="1">
-          <NavLink to="/ho-khau">
-            <span
-              className="icon"
-              style={{
-                background: page === "ho-khau" ? color : "",
-              }}
-            >
-              {dashboard}
-            </span>
-            <span className="label">Hộ khẩu</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="2">
-          <NavLink to="/nhan-khau">
-            <span
-              className="icon"
-              style={{
-                background: page === "/nhan-khau" ? color : "",
-              }}
-            >
-              {tables}
-            </span>
-            <span className="label">Nhân khẩu</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="3">
-          <NavLink to="/lich-su-thay-doi">
-            <span
-              className="icon"
-              style={{
-                background: page === "/lich-su-thay-doi" ? color : "",
-              }}
-            >
-              {tables}
-            </span>
-            <span className="label">Lịch sử thay đổi</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="11">
-          <NavLink to="/tam-tru-tam-vang">
-            <span
-              className="icon"
-              style={{
-                background: page === "/tam-tru-tam-vang" ? color : "",
-              }}
-            >
-              {tables}
-            </span>
-            <span className="label">Tạm trú tạm vắng</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="10">
-          <NavLink to="/thong-ke-dancu">
-            <span
-              className="icon"
-              style={{
-                background: page === "/thong-ke-dancu" ? color : "",
-              }}
-            >
-              {tables}
-            </span>
-            <span className="label">Thống kê</span>
-          </NavLink>
-        </Menu.Item>
+          <Menu.Item key="1">
+            <NavLink to="/ho-khau">
+              <span
+                className="icon"
+                style={{
+                  background: page === "ho-khau" ? color : "",
+                }}
+              >
+                {dashboard}
+              </span>
+              <span className="label">Hộ khẩu</span>
+            </NavLink>
+          </Menu.Item>
+          <Menu.Item key="2">
+            <NavLink to="/nhan-khau">
+              <span
+                className="icon"
+                style={{
+                  background: page === "/nhan-khau" ? color : "",
+                }}
+              >
+                {tables}
+              </span>
+              <span className="label">Nhân khẩu</span>
+            </NavLink>
+          </Menu.Item>
+          <Menu.Item key="3">
+            <NavLink to="/lich-su-thay-doi">
+              <span
+                className="icon"
+                style={{
+                  background: page === "/lich-su-thay-doi" ? color : "",
+                }}
+              >
+                {tables}
+              </span>
+              <span className="label">Lịch sử thay đổi</span>
+            </NavLink>
+          </Menu.Item>
+          <Menu.Item key="11">
+            <NavLink to="/tam-tru-tam-vang">
+              <span
+                className="icon"
+                style={{
+                  background: page === "/tam-tru-tam-vang" ? color : "",
+                }}
+              >
+                {tables}
+              </span>
+              <span className="label">Tạm trú tạm vắng</span>
+            </NavLink>
+          </Menu.Item>
+          <Menu.Item key="10">
+            <NavLink to="/thong-ke-dancu">
+              <span
+                className="icon"
+                style={{
+                  background: page === "/thong-ke-dancu" ? color : "",
+                }}
+              >
+                {tables}
+              </span>
+              <span className="label">Thống kê</span>
+            </NavLink>
+          </Menu.Item></>}
         <Menu.Item className="menu-item-header" key="6">
           Phòng tránh covid
         </Menu.Item>
@@ -181,7 +184,7 @@ function Sidenav({ color }) {
             <span className="label">Cách ly</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="7">
+        <Menu.Item key="14">
           <NavLink to="/thong-ke-yte">
             <span
               className="icon"
@@ -194,75 +197,7 @@ function Sidenav({ color }) {
             <span className="label">Thống kê</span>
           </NavLink>
         </Menu.Item>
-        {/* <Menu.Item key="5">
-          <NavLink to="/profile">
-            <span
-              className="icon"
-              style={{
-                background: page === "profile" ? color : "",
-              }}
-            >
-              {billing}
-            </span>
-            <span className="label">Bảng công việc</span>
-          </NavLink>
-        </Menu.Item> */}
-        {/* <Menu.Item key="4">
-          <NavLink to="/rtl">
-            <span
-              className="icon"
-              style={{
-                background: page === "rtl" ? color : "",
-              }}
-            >
-              {rtl}
-            </span>
-            <span className="label">RTL</span>
-          </NavLink>
-        </Menu.Item> */}
-        {/* <Menu.Item key="6">
-          <NavLink to="/profile">
-            <span
-              className="icon"
-              style={{
-                background: page === "profile" ? color : "",
-              }}
-            >
-              {profile}
-            </span>
-            <span className="label">Lịch</span>
-          </NavLink>
-        </Menu.Item> */}
-        {/* <Menu.Item key="7">
-          <NavLink to="/sign-in">
-            <span className="icon">{signin}</span>
-            <span className="label">Sign In</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="8">
-          <NavLink to="/sign-up">
-            <span className="icon">{signup}</span>
-            <span className="label">Sign Up</span>
-          </NavLink>
-        </Menu.Item> */}
       </Menu>
-      {/* <div className="aside-footer">
-        <div
-          className="footer-box"
-          style={{
-            background: color,
-          }}
-        >
-          <span className="icon" style={{ color }}>
-            {dashboard}
-          </span>
-          <h6>Need Help?</h6>
-          <p>Please check our docs</p>
-          <Button type="primary" className="ant-btn-sm ant-btn-block">
-            DOCUMENTATION
-          </Button>
-        </div>
-      </div> */}
     </>
   );
 }

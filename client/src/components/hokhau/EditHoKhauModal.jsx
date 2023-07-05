@@ -14,7 +14,7 @@ const EditHoKhauModal = (props) => {
         setEditModalVisible,
     } = props
 
-    const {hokhau, setHokhau, nhankhau, setNhanKhau} = useData()
+    const {hokhau, setHokhau, nhankhau, setNhanKhau, fetchDataHoKhau} = useData()
 
     const returnChuHo = (soHoKhau) => {
         const hk = hokhau.find(item => item.soHoKhau === soHoKhau)
@@ -51,7 +51,7 @@ const EditHoKhauModal = (props) => {
                             { required: true, message: "Hãy điền trường này" }
                         ]}
                     >
-                        <Input></Input>
+                        <Input disabled ></Input>
                     </Form.Item>
                     <Form.Item
                         label="Khu vực"
@@ -88,7 +88,7 @@ const EditHoKhauModal = (props) => {
                         ]}
                     >
                         <Select 
-                            options={returnListThanhVien(initialValues.soHoKhau).map(item => {
+                            options={returnListThanhVien(initialValues.soHoKhau).filter(item => item.trangThai !== 'Đã qua đời').map(item => {
                                 return {
                                     label: item.hoTen,
                                     value: item.id
@@ -119,12 +119,7 @@ const EditHoKhauModal = (props) => {
             });
             const data = await res.json();
             if(data.success === true){
-                setHokhau(hokhau.map(item => {
-                    if(item.id === selectedRecord.id){
-                        return data.data
-                    }
-                    return item
-                }))
+                await fetchDataHoKhau()
                 message.success('Thay đổi thành công!')
                 setEditModalVisible(false);
             }

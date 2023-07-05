@@ -24,7 +24,7 @@ const ThongKeYTe = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await fetch(`${BACK_END_URL}/yte/thongke/${"2023-07-02"}`);
+                const res = await fetch(`${BACK_END_URL}/yte/thongke/${"2023-07-06"}`);
                 const data = await res.json();
                 setMacCovid(data.data[0].count)
               } catch (error) {
@@ -98,7 +98,7 @@ const ThongKeYTe = () => {
             <Col span={24} md={12} className="mb-24">
             <Card
                 bordered={false}
-                title={<h6 className="font-semibold m-0">Thống kê số lượng mắc covid</h6>}
+                title={<h6 className="font-semibold m-0">Thống kê số lượng mắc covid (2022)</h6>}
                 className="header-solid h-full"
                 bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
                 extra={<div className="sales">

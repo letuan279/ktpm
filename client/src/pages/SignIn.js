@@ -13,13 +13,8 @@ import {
   Alert,
   message,
 } from "antd";
-import signinbg from "../assets/images/img-signin.jpg";
-import {
-  DribbbleOutlined,
-  TwitterOutlined,
-  InstagramOutlined,
-  GithubOutlined,
-} from "@ant-design/icons";
+import { useData } from "../context/NewAppContext";
+import { BACK_END_URL } from "../context/const";
 function onChange(checked) {
   console.log(`switch to ${checked}`);
 }
@@ -29,24 +24,34 @@ const { Header, Footer, Content } = Layout;
 
 
 const SignIn = () => {
-  const onFinish = (values) => {
-    console.log("Success:", values);
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-
   const history = useHistory();
 
-  const handleLogin = () => {
+  const { fetchDataDangNhap, setUser } = useData()
+
+  const handleLogin = async () => {
     const username = document.getElementById("email").value
     const password = document.getElementById("password").value
-    if (username !== "tuanle279" || password !== "1234") {
-      message.warning("Tài khoản hoặc mật khẩu không đúng")
-    } else {
+
+    const res = await fetch(`${BACK_END_URL}/dangnhap`, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userName: username,
+        passWord: password
+      })
+    });
+    const data = await res.json();
+    if (data.success === true) {
       message.success("Đăng nhập thành công!!")
+      setUser(data.data)
       history.push('/dashboard')
+    } else {
+      message.warning("Tài khoản hoặc mật khẩu không đúng")
     }
   }
 
@@ -147,12 +152,12 @@ const SignIn = () => {
                     Đăng nhập
                   </Button>
                 </Form.Item>
-                <p className="font-semibold text-muted">
+                {/* <p className="font-semibold text-muted">
                   Bạn chưa có tài khoản?{" "}
                   <span to="/" className="text-dark font-bold">
                     Đăng ký
                   </span>
-                </p>
+                </p> */}
               </Form>
             </Col>
             {/* <Col

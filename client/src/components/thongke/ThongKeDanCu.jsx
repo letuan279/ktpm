@@ -46,7 +46,7 @@ const ThongKe = () => {
                 extra={<Avatar shape="square" size={48} src='./people.png'></Avatar>}
             >
                 <Space>
-                    <Title style={{marginLeft: 20}}>{nhankhau.length}</Title>
+                    <Title style={{marginLeft: 20}}>{nhankhau.filter(item => item.trangThai !== "Đã qua đời").length}</Title>
                     <Title level={5} >{"(người)"}</Title>
                 </Space>
             </Card>
@@ -60,7 +60,7 @@ const ThongKe = () => {
                 extra={<Avatar shape="square" size={48} src='./men.png'></Avatar>}
             >
                 <Space>
-                    <Title style={{marginLeft: 20}}>{nhankhau.filter(item => item.gioiTinh === 1).length}</Title>
+                    <Title style={{marginLeft: 20}}>{nhankhau.filter(item => item.gioiTinh === 1 && item.trangThai !== 'Đã qua đời').length}</Title>
                     <Title level={5} >{"(người)"}</Title>
                 </Space>
             </Card>
@@ -74,7 +74,7 @@ const ThongKe = () => {
                 extra={<Avatar shape="square" size={48} src='./woman.png'></Avatar>}
             >
                 <Space>
-                    <Title style={{marginLeft: 20}}>{nhankhau.filter(item => item.gioiTinh === 0).length}</Title>
+                    <Title style={{marginLeft: 20}}>{nhankhau.filter(item => item.gioiTinh === 0 && item.trangThai !== 'Đã qua đời').length}</Title>
                     <Title level={5} >{"(người)"}</Title>
                 </Space>
             </Card>
@@ -84,7 +84,7 @@ const ThongKe = () => {
             <Col span={24} md={12} className="mb-24">
             <Card
                 bordered={false}
-                title={<h6 className="font-semibold m-0">Thống kê tạm trú tạm vắng</h6>}
+                title={<h6 className="font-semibold m-0">Thống kê tạm trú tạm vắng (2022)</h6>}
                 className="header-solid h-full"
                 bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
                 extra={<div className="sales">

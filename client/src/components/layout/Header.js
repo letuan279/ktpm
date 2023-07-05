@@ -26,9 +26,10 @@ import {
   FacebookFilled,
 } from "@ant-design/icons";
 
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import avtar from "../../assets/images/team-2.jpg";
+import { useData } from "../../context/NewAppContext";
 
 const ButtonContainer = styled.div`
   .ant-btn-primary {
@@ -60,62 +61,19 @@ const bell = [
     xmlns="http://www.w3.org/2000/svg"
     key={0}
   >
-    <path
+    {/* <path
       d="M10 2C6.68632 2 4.00003 4.68629 4.00003 8V11.5858L3.29292 12.2929C3.00692 12.5789 2.92137 13.009 3.07615 13.3827C3.23093 13.7564 3.59557 14 4.00003 14H16C16.4045 14 16.7691 13.7564 16.9239 13.3827C17.0787 13.009 16.9931 12.5789 16.7071 12.2929L16 11.5858V8C16 4.68629 13.3137 2 10 2Z"
       fill="#111827"
     ></path>
     <path
       d="M10 18C8.34315 18 7 16.6569 7 15H13C13 16.6569 11.6569 18 10 18Z"
       fill="#111827"
-    ></path>
+    ></path> */}
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 14L5 9H15L10 14Z" fill="#111827" />
+    </svg>
   </svg>,
 ];
-
-const clockicon = [
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    key={0}
-  >
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18ZM11 6C11 5.44772 10.5523 5 10 5C9.44772 5 9 5.44772 9 6V10C9 10.2652 9.10536 10.5196 9.29289 10.7071L12.1213 13.5355C12.5118 13.9261 13.145 13.9261 13.5355 13.5355C13.9261 13.145 13.9261 12.5118 13.5355 12.1213L11 9.58579V6Z"
-      fill="#111827"
-    ></path>
-  </svg>,
-];
-
-const data = [
-  {
-    title: (<Tag color="purple">Nguyễn Hùng Tiến</Tag>),
-    description: <span>Đã giao cho bạn một <a>công việc</a></span>,
-  },
-  {
-    title: (<Tag color="purple">Phạm Quang Nhật</Tag>),
-    description: <span>Đã hoàn thành <a>công việc</a> cho bạn giao </span>,
-  }
-];
-
-const menu = (
-  <List
-    min-width="100%"
-    className="header-notifications-dropdown "
-    itemLayout="horizontal"
-    dataSource={data}
-    renderItem={(item) => (
-      <List.Item>
-        <List.Item.Meta
-          title={item.title}
-          description={item.description}
-        />
-      </List.Item>
-    )}
-  />
-);
 
 const logsetting = [
   <svg
@@ -185,8 +143,44 @@ function Header({
     if (input === "cach-ly") return "Tình trạng cách ly"
     if (input === "tam-tru-tam-vang") return "Tạm trú tạm vắng"
     if (input === "thong-ke-dancu") return "Thống kê dân cư"
+    if (input === "thong-ke-yte") return "Thống kê y tế"
     else return "hehe"
   }
+
+  const { user, setUser } = useData()
+  const history = useHistory()
+
+  const handleLogout = () => {
+    setUser({
+      username: "",
+      role: 0
+    })
+    history.push("/dang-nhap")
+  }
+
+  const data = [
+    {
+      title: "",
+      description: <Button style={{ width: "100%" }} onClick={handleLogout} >Đăng xuất</Button>,
+    }
+  ];
+
+  const menu = (
+    <List
+      min-width="50%"
+      className="header-notifications-dropdown "
+      itemLayout="horizontal"
+      dataSource={data}
+      renderItem={(item) => (
+        <List.Item>
+          <List.Item.Meta
+            title={item.title}
+            description={item.description}
+          />
+        </List.Item>
+      )}
+    />
+  );
 
   return (
     <>
@@ -213,25 +207,26 @@ function Header({
           </div>
         </Col>
         <Col span={24} md={18} className="header-control">
-          {/* <Badge size="small" count={4}>
-            <Dropdown overlay={menu} trigger={["click"]}>
-              <a
-                href="#pablo"
-                className="ant-dropdown-link"
-                onClick={(e) => e.preventDefault()}
-              >
-                {bell}
-              </a>
-            </Dropdown>
-          </Badge> */}
-          <Link to="/dang-nhap" className="btn-sign-in">
+          <Dropdown overlay={menu} trigger={["click"]}>
+            <a
+              href="#pablo"
+              className="ant-dropdown-link"
+              onClick={(e) => e.preventDefault()}
+            >
+              {bell}
+            </a>
+          </Dropdown>
+          <div className="btn-sign-in">
             {profile}
-            <Tooltip placement="top" title={"Đăng xuất"}>
-              <span>Lê Anh Tuấn</span>
-            </Tooltip>
-          </Link>
+            <span>{user.username}</span>
+          </div>
 
-          <Tag color="green" >Tổ trưởng</Tag>
+          {user.role === 1 &&
+            <Tag color="green" >Tổ trưởng</Tag>
+          }
+          {user.role === 0 &&
+            <Tag color="orange" >Cán bộ y tế </Tag>
+          }
         </Col>
       </Row>
     </>

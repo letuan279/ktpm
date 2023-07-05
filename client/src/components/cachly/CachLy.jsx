@@ -19,15 +19,15 @@ const CachLy = () => {
               }
         },
         {
-            title: 'Hình thức test',
-            dataIndex: 'hinhThucTest',
-            key: 'hinhThucTest',
-        },
-        {
             title: 'Thời điểm',
             dataIndex: 'thoiDiem',
             key: 'thoiDiem',
             render: item => moment(item).format('DD-MM-YYYY')
+        },
+        {
+            title: 'Hình thức test',
+            dataIndex: 'hinhThucTest',
+            key: 'hinhThucTest',
         },
         {
             title: 'Mức độ covid',

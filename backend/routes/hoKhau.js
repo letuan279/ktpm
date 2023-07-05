@@ -75,58 +75,69 @@ router.post("/thaydoi/:id", (req, res, next) => {
     var thayDoiThanh = "";
     var ngayThayDoi = "";
 
-    const {soHoKhau, khuVuc, diaChi, ngayLap, idChuHo} = req.body;
+    const { soHoKhau, khuVuc, diaChi, ngayLap, idChuHo } = req.body;
     const oldQuery = `SELECT * FROM HoKhau WHERE id = ${id}`;
     db.query(oldQuery, (error, result) => {
-        if(error) {
+        if (error) {
             return res.json(error);
         }
         else {
             const oldData = JSON.parse(JSON.stringify(result[0]));
-            ngayThayDoi = ngayLap;
+            ngayThayDoi = new Date().toISOString().substring(0, 10);
             if (khuVuc !== oldData.khuVuc) {
-                thongTinThayDoi = `Chuyển đến khu vực ${khuVuc}`;
+                thongTinThayDoi = `Khu vực`;
                 thayDoiTu = oldData.khuVuc;
                 thayDoiThanh = khuVuc;
             }
 
-            if(diaChi !== oldData.diaChi) {
-                thongTinThayDoi = `Chuyển đến địa chỉ ${diaChi}`;
+            if (diaChi !== oldData.diaChi) {
+                thongTinThayDoi = `Địa chỉ`;
                 thayDoiTu = oldData.diaChi;
                 thayDoiThanh = diaChi;
             }
 
             if (idChuHo !== oldData.idChuHo) {
-                thongTinThayDoi = `Thay đổi chủ hộ`;
+                thongTinThayDoi = `Chủ hộ`;
                 thayDoiTu = oldData.idChuHo;
                 thayDoiThanh = idChuHo;
             }
 
             if (soHoKhau !== oldData.soHoKhau) {
-                thongTinThayDoi = `Thay đổi số hộ khẩu`;
+                thongTinThayDoi = `Số hộ khẩu`;
                 thayDoiTu = oldData.soHoKhau;
                 thayDoiThanh = soHoKhau;
             }
 
+            const idHoKhauQuery = `SELECT id FROM HoKhau WHERE soHoKhau = '${soHoKhau}'`;
             const q = `UPDATE HoKhau SET soHoKhau = '${soHoKhau}', khuVuc = '${khuVuc}', diaChi = '${diaChi}', ngayLap = '${ngayLap}', idChuHo = ${idChuHo} WHERE id = ${id}; INSERT INTO ThayDoiHoKhau ( thongTinThayDoi, thayDoiTu, thayDoiThanh, ngayThayDoi, idHoKhau) VALUES ('${thongTinThayDoi}', '${thayDoiTu}', '${thayDoiThanh}', '${ngayThayDoi}', '${idChuHo}')`;
-            db.query(q, (err, data) => {
-                if(err) {
+            db.query(idHoKhauQuery, (err, data) => {
+                if (err) {
                     return res.json(err);
                 }
                 else {
-                    data["id"] = id;
-                    return res.json({
-                        success: true,
-                        message: "Thay doi thong tin HoKhau thanh cong",
-                        data: {
-                            "id": id,
-                            "soHoKhau": soHoKhau,
-                            "khuVuc": khuVuc,
-                            "diaChi": diaChi,
-                            "ngayLap": ngayLap,
-                            "idChuHo": idChuHo,
+                    const idHoKhau = result[0].id;
+                    const q = `UPDATE HoKhau SET soHoKhau = '${soHoKhau}', khuVuc = '${khuVuc}', diaChi = '${diaChi}', ngayLap = '${ngayLap}', idChuHo = ${idChuHo} WHERE id = ${id}; INSERT INTO ThayDoiHoKhau ( thongTinThayDoi, thayDoiTu, thayDoiThanh, ngayThayDoi, idHoKhau) VALUES ('${thongTinThayDoi}', '${thayDoiTu}', '${thayDoiThanh}', '${ngayThayDoi}', '${idHoKhau}')`;
+                    db.query(q, (err, data) => {
+                        if (err) {
+                            return res.json(err);
+                        }
+                        else {
+                            data["id"] = id;
+                            return res.json({
+                                success: true,
+                                message: "Thay doi thong tin HoKhau thanh cong",
+                                data: {
+                                    "id": id,
+                                    "soHoKhau": soHoKhau,
+                                    "khuVuc": khuVuc,
+                                    "diaChi": diaChi,
+                                    "ngayLap": ngayLap,
+                                    "idChuHo": idChuHo,
+                                }
+                            })
                         }
                     })
+
                 }
             })
         }
@@ -170,7 +181,7 @@ router.get("/thongke/timkiem", (req, res, next) => {
 router.get("/thaydoi/hokhau", (req, res, next) => {
     const q = "SELECT * FROM `ThayDoiHoKhau`";
     db.query(q, (err, data) => {
-        if(err) {
+        if (err) {
             return res.json(err);
         }
         else {

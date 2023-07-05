@@ -40,15 +40,6 @@ const TachHoKhauModal = (props) => {
                 });
             }}>
                 <Form form={form} layout="vertical">
-                    {/* <Form.Item
-                        label="Số hộ khẩu"
-                        name="soHoKhau"
-                        rules={[
-                            { required: true, message: "Hãy điền trường này" }
-                        ]}
-                    >
-                        <Input></Input>
-                    </Form.Item> */}
                     <Form.Item
                         label="Khu vực"
                         name="khuVuc"
@@ -85,7 +76,7 @@ const TachHoKhauModal = (props) => {
                     >
                         <Select 
                             mode='multiple'
-                            options={returnListThanhVienKhongPhaiChuHo(selectedRecord.soHoKhau).map(item => {
+                            options={returnListThanhVienKhongPhaiChuHo(selectedRecord.soHoKhau).filter(item => item.trangThai !== 'Đã qua đời').map(item => {
                                 return {
                                     label: item.hoTen,
                                     value: item.id
@@ -118,8 +109,8 @@ const TachHoKhauModal = (props) => {
             const data = await res.json();
             if(data.success === true){
                 message.success('Tách hộ khẩu thành công!')
-                setEditModalVisible(false);
                 await fetchDataHoKhau()
+                setEditModalVisible(false);
             }
           } catch (error) {
             console.error(error);

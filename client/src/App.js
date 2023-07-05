@@ -35,7 +35,7 @@ function App() {
             <Route path="/thong-ke-yte" exact component={ThongKeYTe} />
             <Route path="/khai-bao-y-te" exact component={KhaiBaoYTe} />
             <Route path="/cach-ly" exact component={CachLy} />
-            <Redirect from="*" to="/ho-khau" />
+            <Redirect from="*" to="/thong-ke-yte" />
           </Main>
         </Switch>
       </div>

@@ -88,7 +88,7 @@ const TamTruTamVang = () => {
 
     useEffect(() => {
         fetchDataTamTru()
-        fetchDataTamTru()
+        fetchDataTamVang()
     }, [])
 
     const [searchTamTru, SetSearchTamTru] = useState("")

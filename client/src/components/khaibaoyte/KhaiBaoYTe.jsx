@@ -73,6 +73,7 @@ const KhaiBaoYTe = () => {
                         columns={columsKhaiBaoYTe} 
                         dataSource={khaiBaoYTe}
                         className="ant-border-space"
+                        scroll={{y: 480}}
                     />
                     </Card>
                 </Col>

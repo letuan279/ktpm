@@ -14,6 +14,15 @@ const AddKhaiBaoYTeModal = (props) => {
 
     const {nhankhau, khaiBaoYTe, fetchDataKhaiBaoYTe} = useData();
 
+    const [selectedNhanKhau, setSelectedNhanKhau] = useState(null);
+    const [hoTen, setHoTen] = useState("");
+
+    const handleNhanKhauChange = (value) => {
+        setSelectedNhanKhau(value);
+        const selected = nhankhau.find(item => item.id === value);
+        setHoTen(selected.hoTen);
+    }
+
     const AddForm = ({ visible, onCreate, onCancel, initialValues }) => {
         const [form] = Form.useForm();
         return (
@@ -44,19 +53,21 @@ const AddKhaiBaoYTeModal = (props) => {
                                     value: item.id
                                 }
                             })}
+                           
+                            // value={item.soCMND}
                          ></Select>
                 </Form.Item>
 
-                <Form.Item
+                {/* <Form.Item
                         label="Họ và tên"
                         // name="doiTuongTiepXuc"
                         // rules={[
                         //     { required: true, message: "Hãy điền trường này" }
                         // ]}
                     >
-                        <Input></Input>
+                        <Input value={hoTen} disabled onChange={e => setHoTen(e.target.value)} />
                     </Form.Item>
-                    
+                     */}
                     <Form.Item
                         label="Hành Trình"
                         name="hanhTrinh"
@@ -120,7 +131,7 @@ const AddKhaiBaoYTeModal = (props) => {
             });
             const data = await res.json();
             if(data.success === true){
-                fetchDataKhaiBaoYTe()
+                await fetchDataKhaiBaoYTe()
                 message.success("Khai báo y tế thành công!")
                 setEditModalVisible(false);
             }

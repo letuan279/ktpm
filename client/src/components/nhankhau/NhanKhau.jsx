@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useData } from '../../context/NewAppContext'
-import { Card, Table, Row, Col, Button, Input, Modal, Descriptions, Tag, Space } from 'antd';
+import { Card, Table, Row, Col, Button, Input, Modal, Descriptions, Tag, Space, Popconfirm, message } from 'antd';
 import moment from 'moment';
 import AddNhanKhauModal from './AddNhanKhauModal';
 import ThayDoiNhanKhauModal from './ThayDoiNhanKhauModal';
+import { BACK_END_URL } from '../../context/const';
 
 
 const NhanKhau = () => {
@@ -26,7 +27,7 @@ const NhanKhau = () => {
       title: 'Số CMND',
       dataIndex: 'soCMND',
       key: 'soCMND',
-      width: '30%',
+      width: '10%',
       render: item => {
         if(!item) return "Không có"
         return item
@@ -38,7 +39,8 @@ const NhanKhau = () => {
       key: 'idHoKhau',
       render: item => {
         return hokhau.filter(i => i.id === item)[0].soHoKhau
-      }
+      },
+      width: '8%'
     },
     {
       title: 'Giới tính',
@@ -47,18 +49,21 @@ const NhanKhau = () => {
       render: item => {
         if(item === 1) return <Tag color='blue' >Nam</Tag>
         if(item === 0) return <Tag color='purple' >Nữ</Tag>
-      }
+      },
+      width: '8%'
     },
     {
       title: 'Thường trú',
       dataIndex: 'thuongTru',
       key: 'thuongTru',
+      ellipsis: true
     },
     {
       title: 'Ngày sinh',
       dataIndex: 'ngaySinh',
       key: 'ngaySinh',
-      render: item => moment(item).format('DD-MM-YYYY')
+      render: item => moment(item).format('DD-MM-YYYY'),
+      width: '10%'
     },
     {
       title: 'Nghề nghiệp',
@@ -67,24 +72,37 @@ const NhanKhau = () => {
       render: item => {
         if(!item) return "Không có"
         return item
-      }
+      },
+      width: '10%',
+      ellipsis: true
     },
     {
       title: 'Trạng thái',
       dataIndex: 'trangThai',
       key: 'trangThai',
       render: item => {
-        if(item === "Đang ở") return <Tag color='green' >{item}</Tag>
+        if(item === "Bình thường") return <Tag color='green' >{item}</Tag>
         if(item === "Tạm vắng") return <Tag color='blue' >{item}</Tag>
         if(item === "Đã qua đời") return <Tag color='red' >{item}</Tag>
         return <Tag color='orange' >{item}</Tag>
-      }
+      },
+      width: '8%'
     },
     {
       title: 'Thao tác',
       render: (text, record) => (
         <div onClick={e => e.stopPropagation()}>
-            <Button type='primary' onClick={() => handleChuyen(record)} >Chuyển đi</Button>
+            <Button size='small' type='primary' onClick={() => handleChuyen(record)} >Chuyển đi</Button>
+            <Popconfirm
+              placement="topLeft"
+              title={"Xác nhận chết"}
+              description={"Bạn có muốn để người này chết?"}
+              onConfirm={() => handleChet(record.soCMND)}
+              okText="Ok"
+              cancelText="Hủy"
+            >
+              <Button size='small' style={{marginLeft: 5}} type='danger'>Chết</Button>
+          </Popconfirm>
         </div>
     ),
     },
@@ -103,6 +121,20 @@ const NhanKhau = () => {
     setChuyenSelectedRow(record);
     setChuyenModalVisible(true);
   };
+
+  // Khai tu
+  const handleChet = async (soCMND) => {
+    try {
+      const res = await fetch(`${BACK_END_URL}/nhankhau/khaitu/${soCMND}`);
+      const data = await res.json();
+      if(data.success === true) {
+        message.success("Khai tử nhân khẩu thành công")
+        fetchDataNhanKhau()
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   // Load data nhankhau
   useEffect(() => {
@@ -136,6 +168,7 @@ const NhanKhau = () => {
               }
             }) : []}
             className="ant-border-space"
+            scroll={{y: 480}}
           />
         </Card>
       </Col>

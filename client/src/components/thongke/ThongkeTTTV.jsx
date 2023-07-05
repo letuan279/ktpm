@@ -56,19 +56,25 @@ function ThongKeTTTV() {
             "#8c8c8c",
             "#8c8c8c",
             "#8c8c8c",
+            "#8c8c8c",
+            "#8c8c8c",
+            "#8c8c8c",
           ],
         },
       },
       categories: [
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8",
+        "T9",
+        "T10",
+        "T11",
+        "T12",
       ],
     },
 
@@ -81,8 +87,8 @@ function ThongKeTTTV() {
     },
   }
 
-  const [dataAge, setDataAge] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0])
-  const [data, setData] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0])
+  const [dataAge, setDataAge] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+  const [data, setData] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   useEffect(() => {
     const fetchAll = async () => {
       const fetchDataTamTru = async (date) => {
@@ -105,8 +111,8 @@ function ThongKeTTTV() {
         }
       }
   
-      const dotuoi0_6 = await fetchDataTamTru("2022-02-28");
-      const dotuoi6_12 = await fetchDataTamTru("2022-03-30");
+      const dotuoi0_6 = await fetchDataTamTru("2022-01-30");
+      const dotuoi6_12 = await fetchDataTamTru("2022-02-28");
       const dotuoi12_18 = await fetchDataTamTru("2022-03-30");
       const dotuoi18_22 = await fetchDataTamTru("2022-04-30");
       const dotuoi22_30 = await fetchDataTamTru("2022-05-30");
@@ -115,9 +121,11 @@ function ThongKeTTTV() {
       const dotuoi60_70 = await fetchDataTamTru("2022-08-30");
       const dotuoi70 = await fetchDataTamTru("2022-09-30");
       const dotuoi80 = await fetchDataTamTru("2022-10-30");
+      const dotuoi81 = await fetchDataTamTru("2022-11-30");
+      const dotuoi82 = await fetchDataTamTru("2022-12-30");
 
-      const dotuoi0_6_ = await fetchDataTamVang("2022-02-28");
-      const dotuoi6_12_ = await fetchDataTamVang("2022-03-30");
+      const dotuoi0_6_ = await fetchDataTamVang("2022-01-30");
+      const dotuoi6_12_ = await fetchDataTamVang("2022-02-28");
       const dotuoi12_18_ = await fetchDataTamVang("2022-03-30");
       const dotuoi18_22_ = await fetchDataTamVang("2022-04-30");
       const dotuoi22_30_ = await fetchDataTamVang("2022-05-30");
@@ -126,6 +134,8 @@ function ThongKeTTTV() {
       const dotuoi60_70_ = await fetchDataTamVang("2022-08-30");
       const dotuoi70_ = await fetchDataTamVang("2022-09-30");
       const dotuoi80_ = await fetchDataTamVang("2022-10-30");
+      const dotuoi81_ = await fetchDataTamVang("2022-11-30");
+      const dotuoi82_ = await fetchDataTamVang("2022-12-30");
 
 
       const data = []
@@ -139,6 +149,8 @@ function ThongKeTTTV() {
       data.push(dotuoi60_70)
       data.push(dotuoi70)
       data.push(dotuoi80)
+      data.push(dotuoi81)
+      data.push(dotuoi82)
       
       const data2 = []
       data2.push(dotuoi0_6_)
@@ -151,6 +163,8 @@ function ThongKeTTTV() {
       data2.push(dotuoi60_70_)
       data2.push(dotuoi70_)
       data2.push(dotuoi80_)
+      data2.push(dotuoi81_)
+      data2.push(dotuoi82_)
 
       
       setDataAge(data);

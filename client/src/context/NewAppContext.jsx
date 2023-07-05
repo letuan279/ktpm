@@ -12,6 +12,10 @@ const NewAppContextProvider = ({ children }) => {
     const [lichSuNhanKhau, setLichSuNhanKhau] = useState([])
     const [khaiBaoYTe, setKhaiBaoYTe] = useState([])
     const [cachLy, setCachLy] = useState([])
+    const [user, setUser] = useState({
+      username: "",
+      role: 0
+    })
 
 
     const fetchDataHoKhau = async () => {
@@ -96,6 +100,25 @@ const NewAppContextProvider = ({ children }) => {
         }
     }
 
+    const fetchDataDangNhap = async (values) => {
+      try {
+          const res = await fetch(`${BACK_END_URL}/dangnhap`,{
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values)
+        });
+          const data = await res.json();
+          setUser(data.data);
+        } catch (error) {
+          console.error(error);
+        }
+    }
+
 
 
     useEffect(() => {
@@ -133,7 +156,10 @@ const NewAppContextProvider = ({ children }) => {
                 cachLy,
                 fetchDataCachLy,
                 fetchDataLichSuNhanKhau,
-                fetchDataLichSuHoKhau
+                fetchDataLichSuHoKhau,
+                fetchDataDangNhap,
+                user,
+                setUser
             }
         }>
             {children}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Row, Col, Card, Radio, Table, Upload, message, Progress, Button, Avatar, Typography, Form, Input, Modal, DatePicker, Tag, Select, Popconfirm,
-    InputNumber
+    InputNumber,
+    Space
 } from "antd";
 import { BACK_END_URL } from '../../context/const';
 import { useData } from '../../context/NewAppContext';
@@ -12,19 +13,7 @@ const AddNhanKhauModal = (props) => {
         setEditModalVisible,
     } = props
 
-    const {hokhau, setHokhau, nhankhau, setNhanKhau} = useData()
-
-    const returnChuHo = (soHoKhau) => {
-        const hk = hokhau.find(item => item.soHoKhau === soHoKhau)
-        const ch = nhankhau.find(item => item.id === hk.idChuHo)
-        return ch;
-    }
-
-    const returnListThanhVien = (soHoKhau) => {
-        const hk = hokhau.find(item => item.soHoKhau === soHoKhau)
-        const thanhVien = nhankhau.filter(item => item.idHoKhau === hk.id)
-        return thanhVien
-    } 
+    const {hokhau, setHokhau, nhankhau, setNhanKhau, fetchDataNhanKhau} = useData()
 
     const AddForm = ({ visible, onCreate, onCancel, initialValues }) => {
         const [form] = Form.useForm();
@@ -38,76 +27,90 @@ const AddNhanKhauModal = (props) => {
                 });
             }}>
                 <Form form={form} layout="vertical">
-                    <Form.Item
-                        label="Họ và tên"
-                        name="hoTen"
-                        rules={[
-                            { required: true, message: "Hãy điền trường này" }
-                        ]}
-                    >
-                        <Input></Input>
-                    </Form.Item>
-                    <Form.Item
-                        label="Số CMND"
-                        name="soCMND"
-                    >
-                        <Input></Input>
-                    </Form.Item>
-                    <Form.Item
-                        label="Số hộ khẩu"
-                        name="idHoKhau"
-                        rules={[
-                            { required: true, message: "Hãy điền trường này" }
-                        ]}
-                    >
-                        <Select
-                            options={hokhau.map(item => {
-                                return {
-                                    label: item.soHoKhau,
-                                    value: item.id
-                                }
-                            })}
-                        ></Select>
-                    </Form.Item>
-                    <Form.Item
-                        label="Thường trú"
-                        name="thuongTru"
-                    >
-                        <Input></Input>
-                    </Form.Item>
-                    <Form.Item
-                        label="Biệt danh"
-                        name="bietDanh"
-                    >
-                        <Input></Input>
-                    </Form.Item>
-                    <Form.Item
-                        label="Ngày sinh"
-                        name="ngaySinh"
-                        rules={[
-                            { required: true, message: "Hãy điền trường này" }
-                        ]}
-                    >
-                        <DatePicker></DatePicker>
-                    </Form.Item>
-                    <Form.Item
-                        label="Giới tính"
-                        name="gioiTinh"
-                        rules={[
-                            { required: true, message: "Hãy điền trường này" }
-                        ]}
-                    >
-                        <Radio.Group>
-                            <Radio value={1}>Nam</Radio>
-                            <Radio value={0}>Nữ</Radio>
-                        </Radio.Group>
-                    </Form.Item>
-                    <Form.Item
-                        label="Nghề nghiệp"
-                        name="ngheNghiep"
-                    >
-                        <Input></Input>
-                    </Form.Item>
+
+                    <Row gutter={[24, 0]}>
+                        <Col span={24} md={12} className="mb-24">
+                            <Form.Item
+                                label="Họ và tên"
+                                name="hoTen"
+                                rules={[
+                                    { required: true, message: "Hãy điền trường này" }
+                                ]}
+                            >
+                                <Input></Input>
+                            </Form.Item>
+                            <Form.Item
+                                label="Ngày sinh"
+                                name="ngaySinh"
+                                rules={[
+                                    { required: true, message: "Hãy điền trường này" }
+                                ]}
+                            >
+                                <DatePicker></DatePicker>
+                            </Form.Item>
+                            <Form.Item
+                                label="Số hộ khẩu"
+                                name="idHoKhau"
+                                rules={[
+                                    { required: true, message: "Hãy điền trường này" }
+                                ]}
+                            >
+                                <Select
+                                    options={hokhau.map(item => {
+                                        return {
+                                            label: item.soHoKhau,
+                                            value: item.id
+                                        }
+                                    })}
+                                ></Select>
+                            </Form.Item>
+                            <Form.Item
+                                label="Giới tính"
+                                name="gioiTinh"
+                                rules={[
+                                    { required: true, message: "Hãy điền trường này" }
+                                ]}
+                            >
+                                <Radio.Group>
+                                    <Radio value={1}>Nam</Radio>
+                                    <Radio value={0}>Nữ</Radio>
+                                </Radio.Group>
+                            </Form.Item>
+                            <Form.Item
+                                
+                            >
+
+                            </Form.Item>
+                        </Col>
+                        <Col span={24} md={12} className="mb-24">
+                        <Form.Item
+                                label="Số CMND"
+                                name="soCMND"
+                            >
+                                <Input></Input>
+                            </Form.Item>
+                            <Form.Item
+                                label="Thường trú"
+                                name="thuongTru"
+                            >
+                                <Input></Input>
+                            </Form.Item>
+                            <Form.Item
+                                label="Biệt danh"
+                                name="bietDanh"
+                            >
+                                <Input></Input>
+                            </Form.Item>
+                            
+                           
+                            <Form.Item
+                                label="Nghề nghiệp"
+                                name="ngheNghiep"
+                            >
+                                <Input></Input>
+                            </Form.Item>
+                        </Col>
+                    </Row>
                 </Form>
             </Modal>
         );
@@ -122,10 +125,8 @@ const AddNhanKhauModal = (props) => {
             if(!values.ngheNghiep) values.ngheNghiep = "Không có"
             if(!values.bietDanh) values.bietDanh = "Không có"
             values.ngaySinh = values.ngaySinh.format("YYYY-MM-DD")
-            values.trangThai = "Đang ở"
-            
-            // console.log(values);
-
+            values.trangThai = "Bình thường"
+        
             const res = await fetch(`${BACK_END_URL}/nhankhau`, {
                 method: "POST",
                 mode: "cors",
@@ -138,7 +139,7 @@ const AddNhanKhauModal = (props) => {
             });
             const data = await res.json();
             if(data.success === true){
-                setNhanKhau([values, ...nhankhau])
+                await fetchDataNhanKhau()
                 message.success('Tạo thành công!')
                 setEditModalVisible(false);
             }

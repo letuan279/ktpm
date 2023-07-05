@@ -56,19 +56,25 @@ function ThongKeLineChart() {
             "#8c8c8c",
             "#8c8c8c",
             "#8c8c8c",
+            "#8c8c8c",
+            "#8c8c8c",
+            "#8c8c8c",
           ],
         },
       },
       categories: [
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8",
+        "T9",
+        "T10",
+        "T11",
+        "T12",
       ],
     },
 
@@ -81,8 +87,8 @@ function ThongKeLineChart() {
     },
   }
 
-  const [dataAge, setDataAge] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0])
-  const [data, setData] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0])
+  const [dataAge, setDataAge] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+  const [data, setData] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   useEffect(() => {
     const fetchAll = async () => {
       const fetchData = async (date) => {
@@ -95,9 +101,9 @@ function ThongKeLineChart() {
         }
       }
   
-      const dotuoi0_6 = await fetchData("2022-02-28");
+      const dotuoi0_6 = await fetchData("2022-01-30");
+      const dotuoi0_7 = await fetchData("2022-02-28");
       const dotuoi6_12 = await fetchData("2022-03-30");
-      const dotuoi12_18 = await fetchData("2022-03-30");
       const dotuoi18_22 = await fetchData("2022-04-30");
       const dotuoi22_30 = await fetchData("2022-05-30");
       const dotuoi30_45 = await fetchData("2022-06-30");
@@ -105,12 +111,14 @@ function ThongKeLineChart() {
       const dotuoi60_70 = await fetchData("2022-08-30");
       const dotuoi70 = await fetchData("2022-09-30");
       const dotuoi80 = await fetchData("2022-10-30");
+      const dotuoi81 = await fetchData("2022-11-30");
+      const dotuoi82 = await fetchData("2022-12-30");
 
 
       const data = []
       data.push(dotuoi0_6)
+      data.push(dotuoi0_7)
       data.push(dotuoi6_12)
-      data.push(dotuoi12_18)
       data.push(dotuoi18_22)
       data.push(dotuoi22_30)
       data.push(dotuoi30_45)
@@ -118,6 +126,8 @@ function ThongKeLineChart() {
       data.push(dotuoi60_70)
       data.push(dotuoi70)
       data.push(dotuoi80)
+      data.push(dotuoi81)
+      data.push(dotuoi82)
       
       setDataAge(data);
       const soNgKhoe = nhankhau.filter(item => item.trangThai !== "Đã qua đời").length

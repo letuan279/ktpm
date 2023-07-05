@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useData } from '../../context/NewAppContext';
 import { Card, Table, Row, Col, Button, Input, Modal, Descriptions, Tag, Space } from 'antd';
 import moment from 'moment';
@@ -18,7 +18,7 @@ const LichSuThayDoi = () => {
       dataIndex: 'idHoKhau',
       key: 'idHoKhau',
       render: item => {
-        return hokhau.find(e => e.id === item).soHoKhau
+        return hokhau.find(e => e.id === item)?.soHoKhau
       }
     },
     {
@@ -31,16 +31,27 @@ const LichSuThayDoi = () => {
       title: 'Thông tin thay đổi',
       dataIndex: 'thongTinThayDoi',
       key: 'thongTinThayDoi',
+      ellipsis: true,
     },
     {
       title: 'Thay đổi từ',
       dataIndex: 'thayDoiTu',
       key: 'thayDoiTu',
+      render: item => {
+        if(isNaN(item)) return item
+        return nhankhau.find(i => i.id == item).hoTen
+      },
+      ellipsis: true,
     },
     {
       title: 'Thay đổi thành',
       dataIndex: 'thayDoiThanh',
       key: 'thayDoiThanh',
+      render: item => {
+        if(isNaN(item)) return item
+        return nhankhau.find(i => i.id == item).hoTen
+      },
+      ellipsis: true
     },
    
  
@@ -52,7 +63,7 @@ const LichSuThayDoi = () => {
       dataIndex: 'idNhanKhau',
       key: 'idNhanKhau',
       render: item => {
-        return nhankhau.find(e => e.id === item).hoTen
+        return nhankhau.find(e => e.id === item)?.hoTen
       }
     },
     {

@@ -44,7 +44,7 @@ const MyForm = () => {
                     { required: true, message: "Hãy điền trường này" }
                 ]}
             >
-                <Input value={hoTen} onChange={e => setHoTen(e.target.value)} />
+                <Input value={hoTen} disabled onChange={e => setHoTen(e.target.value)} />
             </Form.Item>
         </Form>
     );

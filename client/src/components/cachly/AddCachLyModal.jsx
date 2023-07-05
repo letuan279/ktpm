@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Row, Col, Card, Radio, Table, Upload, message, Progress, Button, Avatar, Typography, Form, Input, Modal, DatePicker, Tag, Select, Popconfirm,
     InputNumber
 } from "antd";
@@ -14,6 +14,23 @@ const AddCachLyModal
     } = props
 
     const {nhankhau, cachLy, fetchDataCachLy} = useData();
+
+    const [selectedNhanKhau, setSelectedNhanKhau] = useState(null);
+    const [hoTen, setHoTen] = useState("");
+    const [trangThaiTest, setTrangThaiTest] = useState("Âm Tính");
+
+    const handleNhanKhauChange = (value) => {
+        setSelectedNhanKhau(value);
+        const selected = nhankhau.find(item => item.id === value);
+        setHoTen(selected.hoTen);
+    }
+
+    const handleMucDoCovidChange = (e) => {
+        if (e.target.value === "F0") {
+          setTrangThaiTest("Dương tính");
+        }
+      };
+ 
 
     const AddForm = ({ visible, onCreate, onCancel, initialValues }) => {
         const [form] = Form.useForm();
@@ -45,6 +62,8 @@ const AddCachLyModal
                                     value: item.id
                                 }
                             })}
+                            // onChange={handleNhanKhauChange}
+                            // values ={this.value}
                          ></Select>
                 </Form.Item>
 
@@ -55,7 +74,7 @@ const AddCachLyModal
                         //     { required: true, message: "Hãy điền trường này" }
                         // ]}
                     >
-                        <Input></Input>
+                        <Input value={hoTen} disabled onChange={e => setHoTen(e.target.value)} />
                     </Form.Item> */}
                     
                     <Form.Item
@@ -88,7 +107,7 @@ const AddCachLyModal
                         { required: true, message: "Hãy điền trường này" }
                     ]}
                     >
-                        <Radio.Group>
+                        <Radio.Group  >
                             <Radio value={"F0"}>F0</Radio>
                             <Radio value={"F1"}>F1</Radio>
                             <Radio value={"F2"}>F2</Radio>
@@ -103,7 +122,7 @@ const AddCachLyModal
                         { required: true, message: "Hãy điền trường này" }
                     ]}
                     >
-                        <Radio.Group>
+                        <Radio.Group >
                             <Radio value={"Âm tính"}>Âm tính</Radio>
                             <Radio value={"Dương tính"}>Dương tính</Radio>
                         </Radio.Group>

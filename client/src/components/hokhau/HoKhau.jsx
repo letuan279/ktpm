@@ -121,6 +121,7 @@ const HoKhau = () => {
                   }
                 }) : []}
                 className="ant-border-space"
+                scroll={{y: 500}}
                 onRow={(record, rowIndex) => {
                   return {
                       onClick: () => {
