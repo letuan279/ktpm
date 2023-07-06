@@ -72,7 +72,7 @@ const CachLy = () => {
                         columns={columsCachLy} 
                         dataSource={cachLy}
                         className="ant-border-space"
-                        // scroll={{ y: 200 }}
+                        scroll={{ y: 480 }}
                     />
                     </Card>
                 </Col>

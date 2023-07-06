@@ -15,16 +15,14 @@ const AddKhaiBaoYTeModal = (props) => {
     const {nhankhau, khaiBaoYTe, fetchDataKhaiBaoYTe} = useData();
 
     const [selectedNhanKhau, setSelectedNhanKhau] = useState(null);
-    const [hoTen, setHoTen] = useState("");
-
-    const handleNhanKhauChange = (value) => {
-        setSelectedNhanKhau(value);
-        const selected = nhankhau.find(item => item.id === value);
-        setHoTen(selected.hoTen);
-    }
-
+    
     const AddForm = ({ visible, onCreate, onCancel, initialValues }) => {
         const [form] = Form.useForm();
+        const [hoTen, setHoTen] = useState("");
+        function handleNhanKhauChange(value, option) {
+            const nhanKhau = nhankhau.find((item) => item.id === value);
+            setHoTen(nhanKhau.hoTen);
+          }
         return (
             <Modal visible={visible} title="Khai báo y tế" okText="Lưu" cancelText="Hủy" onCancel={onCancel} onOk={() => {
                 form.validateFields().then((values) => {
@@ -54,20 +52,19 @@ const AddKhaiBaoYTeModal = (props) => {
                                 }
                             })}
                            
-                            // value={item.soCMND}
                          ></Select>
                 </Form.Item>
 
-                {/* <Form.Item
+                <Form.Item
                         label="Họ và tên"
-                        // name="doiTuongTiepXuc"
+                        name="hoTen"
                         // rules={[
                         //     { required: true, message: "Hãy điền trường này" }
                         // ]}
                     >
-                        <Input value={hoTen} disabled onChange={e => setHoTen(e.target.value)} />
+                        <Input value={hoTen} disabled  onChange={e => setHoTen(e.target.value)}/>
                     </Form.Item>
-                     */}
+                    
                     <Form.Item
                         label="Hành Trình"
                         name="hanhTrinh"
