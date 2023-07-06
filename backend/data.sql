@@ -163,11 +163,11 @@ INSERT INTO CachLy (idNhanKhau, hinhThucTest, thoiDiem, mucDoCovid, trangThaiTes
 (8, 'PCR', '2022-03-17', 'F0', 'Âm tính');
 
 INSERT INTO ThayDoiHoKhau (thongTinThayDoi, thayDoiTu, thayDoiThanh, ngayThayDoi, idHoKhau) VALUES
-('Chuyển đến Khu phố 1000', 'Khu phố 2000', 'Khu phố 1000', '2023-06-15', 1),
-('Chuyển đến Khu phố 2001', 'Khu phố 2000', 'Khu phố 2001', '2023-06-16', 2),
-('Chuyển đến Khu phố 3002', 'Khu phố 2000', 'Khu phố 3002', '2023-06-17', 3),
-('Chuyển đến Khu phố 4003', 'Khu phố 2000', 'Khu phố 4003', '2023-06-18', 4),
-('Chuyển đến Khu phố 5004', 'Khu phố 2000', 'Khu phố 5004', '2023-06-19', 5);
+('Chuyển đến Khu phố 1000', 'Khu phố 1000', 'Khu phố 1', '2023-06-15', 1),
+('Chuyển đến Khu phố 2001', 'Khu phố 1001', 'Khu phố 1', '2023-06-16', 2),
+('Chuyển đến Khu phố 3002', 'Khu phố 1002', 'Khu phố 2', '2023-06-17', 3),
+('Chuyển đến Khu phố 4003', 'Khu phố 1003', 'Khu phố 2', '2023-06-18', 4),
+('Chuyển đến Khu phố 5004', 'Khu phố 1004', 'Khu phố 3', '2023-06-19', 5);
 
 INSERT INTO TamTru (soGiayTamTru, lyDo, thoiGianTamTru, HoTen, soCMND, ngaySinh, gioiTinh, ngheNghiep) VALUES
 ('TT001', 'Công tác', '2023-06-15', 'Nguyễn Hoàng Minh', '388909469', '1990-01-01', 1, 'Kỹ sư'),
