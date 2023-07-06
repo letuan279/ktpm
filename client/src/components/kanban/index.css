@@ -1,0 +1,42 @@
+.title {
+    width: 280px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.task-name {
+    font-weight: 600;
+    font-size: medium;
+    margin-bottom: 0;
+}
+
+.tag {
+    padding: 2px 5px;
+    background-color: #a1af2f;
+    color: white;
+    border-radius: 10px;
+    margin-right: 3px;
+    width: fit-content;
+    font-weight: 600;
+}
+
+.kanban-top {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.kanban-top-ele {
+    margin-left: 20px;
+}
+
+.kanban-top-ele-2 {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.ele-title {
+    color: black;
+}

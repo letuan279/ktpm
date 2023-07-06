@@ -53,13 +53,13 @@ CREATE TABLE `CachLy`(
 
 CREATE TABLE `ThayDoiHoKhau`(
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `nguoiThayDoi` VARCHAR(255) NOT NULL,
     `thongTinThayDoi` VARCHAR(255) NOT NULL,
     `thayDoiTu` VARCHAR(255) NOT NULL,
     `thayDoiThanh` VARCHAR(255) NOT NULL,
     `ngayThayDoi` DATE NOT NULL,
     `idHoKhau` INT UNSIGNED NOT NULL
 );
+
 CREATE TABLE `TamTru`(
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `soGiayTamTru` CHAR(255) NOT NULL,
@@ -71,6 +71,14 @@ CREATE TABLE `TamTru`(
     `gioiTinh` SMALLINT NOT NULL,
     `ngheNghiep` VARCHAR(255) NOT NULL
 );
+
+CREATE TABLE `NguoiDung` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `userName` VARCHAR(255) NOT NULL,
+    `passWord` VARCHAR(255) NOT NULL,
+    `role` SMALLINT NOT NULL
+);
+
 ALTER TABLE
     `NhanKhau` ADD CONSTRAINT `nhankhau_idhokhau_foreign` FOREIGN KEY(`idHoKhau`) REFERENCES `HoKhau`(`id`);
 ALTER TABLE
@@ -100,10 +108,10 @@ INSERT INTO NhanKhau (hoTen, soCMND, bietDanh, gioiTinh, thuongTru, ngaySinh, to
 ('Hoang Van E', '567890123', 'E', 1, 'Số 3, đường LMN', '1988-03-20', 'Không', 3, 'Bác sĩ', 'Tạm vắng'),
 ('Nguyen Thi F', '678901234', 'F', 0, 'Số 3, đường LMN', '1998-07-07', 'Công giáo', 3, 'Sinh viên', 'Đang ở');
 
-INSERT INTO ThayDoiHoKhau (nguoiThayDoi, thongTinThayDoi, thayDoiTu, thayDoiThanh, ngayThayDoi, idHoKhau) VALUES
-('Nguyen Van A', 'Chuyển đến số 1, đường XYZ', 'Số 1, đường ABC', 'Số 1, đường XYZ', '2022-01-01', 1),
-('Pham Van C', 'Chuyển đến số 3, đường LMN', 'Số 2, đường XYZ', 'Số 3, đường LMN', '2021-08-01', 2),
-('Hoang Van E', 'Chuyển đến số 2, đường XYZ', 'Số 3, đường LMN', 'Số 2, đường XYZ', '2023-06-01', 3);
+INSERT INTO ThayDoiHoKhau (thongTinThayDoi, thayDoiTu, thayDoiThanh, ngayThayDoi, idHoKhau) VALUES
+('Chuyển đến số 1, đường XYZ', 'Số 1, đường ABC', 'Số 1, đường XYZ', '2022-01-01', 1),
+('Chuyển đến số 3, đường LMN', 'Số 2, đường XYZ', 'Số 3, đường LMN', '2021-08-01', 2),
+('Chuyển đến số 2, đường XYZ', 'Số 3, đường LMN', 'Số 2, đường XYZ', '2023-06-01', 3);
 
 INSERT INTO TamVang (soGiayTamVang, noiTamTru, tuNgay, denNgay, idNhanKhau) VALUES
 ('TV001', 'Số 1, đường ABC', '2022-01-01', '2022-01-15', 1),
@@ -118,7 +126,9 @@ INSERT INTO KhaiBaoYTe (idNhanKhau, hanhTrinh, trieuChung, ngayKhaiBao, doiTuong
 INSERT INTO CachLy (idNhanKhau, hinhThucTest, thoiDiem, mucDoCovid, trangThaiTest) VALUES
 (1, 'Test PCR', '2022-01-02', 'F0', 'Âm tính'),
 (2, 'Test nhanh', '2021-08-02', 'F1', 'Dương tính'),
-(4, 'Test PCR', '2023-06-01', 'F0', 'Âm tính');
+(2, 'Test nhanh', '2021-08-05', 'F0', 'Âm tính'),
+(4, 'Test PCR', '2023-06-01', 'F0', 'Âm tính'),
+(4, 'Test PCR', '2023-06-10', 'F0', 'Dương tính');
 
 INSERT INTO ThayDoiNhanKhau (ngayChuyen, noiChuyen, ghiChu, idNhanKhau) VALUES
 ('2022-01-01', 'Chuyển đến số 1, đường XYZ', 'Chuyển nhà', 1),
@@ -129,3 +139,10 @@ INSERT INTO TamTru (soGiayTamTru, lyDo, thoiGianTamTru, HoTen, soCMND, ngaySinh,
 ('TT001', 'Công tác', '2022-01-01', 'Nguyen Van A', '123456789', '1990-01-01', 1, 'Kỹ sư'),
 ('TT002', 'Học tập', '2021-08-01', 'Pham Van C', '345678901', '2002-12-25', 1, 'Sinh viên'),
 ('TT003', 'Khám bệnh', '2023-06-01', 'Hoang Van E', '567890123', '1988-03-20', 1, 'Nhà văn');
+
+INSERT INTO NguoiDung (userName, passWord, role) VALUES 
+('tien1', '123456', 0),
+('anhtuan', 'lat123', 1),
+('minhtuan', 'tuana8tmt', 0),
+('nghia', 'khangbacninh', 1),
+('dat', 'dat123', 1);

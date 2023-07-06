@@ -5,7 +5,7 @@ const db = require("../connect_db");
 router.get("/", (req, res, next) => {
     const q = "SELECT * FROM `HoKhau`";
     db.query(q, (err, data) => {
-        if(err) {
+        if (err) {
             return res.json(err);
         } else {
             return res.json({
@@ -19,10 +19,9 @@ router.get("/", (req, res, next) => {
 
 router.get("/:id", (req, res, next) => {
     const idHoKhau = req.params.id;
-    // const q = `SELECT nk.* FROM NhanKhau nk JOIN ThayDoiNhanKhau tdnk ON nk.id = tdnk.idNhanKhau WHERE nk.idHoKhau = ${idHoKhau} AND tdnk.ghiChu != 'Đã qua đời'`;
     const q = `SELECT nk.* FROM NhanKhau nk WHERE nk.idHoKhau = ${idHoKhau} AND nk.trangThai != 'Đã qua đời'`;
     db.query(q, (err, data) => {
-        if(err) {
+        if (err) {
             return res.json(err);
         } else {
             return res.json({
@@ -35,10 +34,10 @@ router.get("/:id", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-    const {soHoKhau, khuVuc, diaChi, ngayLap, idChuHo} = req.body;
+    const { soHoKhau, khuVuc, diaChi, ngayLap, idChuHo } = req.body;
     const q = `INSERT INTO HoKhau (soHoKhau, khuVuc, diaChi, ngayLap, idChuHo) VALUES ('${soHoKhau}', '${khuVuc}', '${diaChi}', '${ngayLap}', '${idChuHo}')`;
     db.query(q, (err, data) => {
-        if(err) {
+        if (err) {
             return res.json(err);
         } else {
             return res.json({
@@ -47,62 +46,109 @@ router.post("/", (req, res, next) => {
                 data: req.body,
             });
         }
-    })    
-});
-
-router.put("/thaydoi/:id", (req, res, next) => {
-    const id = req.params.id;
-    const q = 'UPDATE `HoKhau` SET `soHoKhau` = ?, `khuVuc` = ?, `diaChi` = ?, `ngayLap` = ?, `idChuHo` = ? WHERE `id` = ?';
-    const values = [
-        req.body.soHoKhau,
-        req.body.khuVuc,
-        req.body.diaChi,
-        req.body.ngayLap,
-        req.body.idChuHo
-    ];
-    db.query(q, [...values, id], (err, data) => {
-        if(err) {
-            return res.json(err);
-        } else {
-            return res.json({
-                success: true,
-                message: "Thay doi thong tin HoKhau thanh cong",
-                data: req.body,
-            });
-        }
     })
 });
 
-router.post("/thaydoi/tach", (req, res, next) => {
-    
-    const {soHoKhau, khuVuc, diaChi, ngayLap, idNhanKhau} = req.body;
+router.post("/tach", (req, res, next) => {
+    const { soHoKhau, khuVuc, diaChi, ngayLap, idNhanKhau } = req.body;
     const idChuHoMoi = idNhanKhau[0];
     const idNhanKhauValues = idNhanKhau.join(',');
-    const q = `INSERT INTO HoKhau (soHoKhau, khuVuc, diaChi, ngayLap, idChuHo) VALUES ('${soHoKhau}', '${khuVuc}', '${diaChi}', '${ngayLap}', '${idChuHoMoi}'); UPDATE NhanKhau SET idHoKhau = LAST_INSERT_ID() WHERE id IN (${idNhanKhauValues})`;
-    db.query(q, (err, data) => {
-        if(err) {
+    const q = `INSERT INTO HoKhau (soHoKhau, khuVuc, diaChi, ngayLap, idChuHo) VALUES ('${soHoKhau}', '${khuVuc}', '${diaChi}', '${ngayLap}', '${idChuHoMoi}'); SELECT * FROM HoKhau WHERE id = LAST_INSERT_ID(); UPDATE NhanKhau SET idHoKhau = LAST_INSERT_ID() WHERE id IN (${idNhanKhauValues})`;
+    db.query(q, (err, results) => {
+        if (err) {
             return res.json(err);
         } else {
+            const hoKhau = results[1][0]; // Lấy thông tin hộ khẩu từ kết quả truy vấn SELECT
             return res.json({
                 success: true,
                 message: "Tach HoKhau thanh cong",
-                data: {
-                    "soHoKhau": soHoKhau,
-                    "khuVuc": khuVuc,
-                    "diaChi": diaChi,
-                    "ngayLap": ngayLap,
-                    "idChuHo": idChuHoMoi
-                },
+                data: hoKhau, // Trả về thông tin hộ khẩu vừa được truy vấn
             });
         }
-    }) 
+    });
+});
+
+router.post("/thaydoi/:id", (req, res, next) => {
+    const id = req.params.id;
+    var thongTinThayDoi = "";
+    var thayDoiTu = "";
+    var thayDoiThanh = "";
+    var ngayThayDoi = "";
+
+    const { soHoKhau, khuVuc, diaChi, ngayLap, idChuHo } = req.body;
+    const oldQuery = `SELECT * FROM HoKhau WHERE id = ${id}`;
+    db.query(oldQuery, (error, result) => {
+        if (error) {
+            return res.json(error);
+        }
+        else {
+            const oldData = JSON.parse(JSON.stringify(result[0]));
+            ngayThayDoi = new Date().toISOString().substring(0, 10);
+            if (khuVuc !== oldData.khuVuc) {
+                thongTinThayDoi = `Khu vực`;
+                thayDoiTu = oldData.khuVuc;
+                thayDoiThanh = khuVuc;
+            }
+
+            if (diaChi !== oldData.diaChi) {
+                thongTinThayDoi = `Địa chỉ`;
+                thayDoiTu = oldData.diaChi;
+                thayDoiThanh = diaChi;
+            }
+
+            if (idChuHo !== oldData.idChuHo) {
+                thongTinThayDoi = `Chủ hộ`;
+                thayDoiTu = oldData.idChuHo;
+                thayDoiThanh = idChuHo;
+            }
+
+            if (soHoKhau !== oldData.soHoKhau) {
+                thongTinThayDoi = `Số hộ khẩu`;
+                thayDoiTu = oldData.soHoKhau;
+                thayDoiThanh = soHoKhau;
+            }
+
+            const idHoKhauQuery = `SELECT id FROM HoKhau WHERE soHoKhau = '${soHoKhau}'`;
+            const q = `UPDATE HoKhau SET soHoKhau = '${soHoKhau}', khuVuc = '${khuVuc}', diaChi = '${diaChi}', ngayLap = '${ngayLap}', idChuHo = ${idChuHo} WHERE id = ${id}; INSERT INTO ThayDoiHoKhau ( thongTinThayDoi, thayDoiTu, thayDoiThanh, ngayThayDoi, idHoKhau) VALUES ('${thongTinThayDoi}', '${thayDoiTu}', '${thayDoiThanh}', '${ngayThayDoi}', '${idChuHo}')`;
+            db.query(idHoKhauQuery, (err, data) => {
+                if (err) {
+                    return res.json(err);
+                }
+                else {
+                    const idHoKhau = result[0].id;
+                    const q = `UPDATE HoKhau SET soHoKhau = '${soHoKhau}', khuVuc = '${khuVuc}', diaChi = '${diaChi}', ngayLap = '${ngayLap}', idChuHo = ${idChuHo} WHERE id = ${id}; INSERT INTO ThayDoiHoKhau ( thongTinThayDoi, thayDoiTu, thayDoiThanh, ngayThayDoi, idHoKhau) VALUES ('${thongTinThayDoi}', '${thayDoiTu}', '${thayDoiThanh}', '${ngayThayDoi}', '${idHoKhau}')`;
+                    db.query(q, (err, data) => {
+                        if (err) {
+                            return res.json(err);
+                        }
+                        else {
+                            data["id"] = id;
+                            return res.json({
+                                success: true,
+                                message: "Thay doi thong tin HoKhau thanh cong",
+                                data: {
+                                    "id": id,
+                                    "soHoKhau": soHoKhau,
+                                    "khuVuc": khuVuc,
+                                    "diaChi": diaChi,
+                                    "ngayLap": ngayLap,
+                                    "idChuHo": idChuHo,
+                                }
+                            })
+                        }
+                    })
+
+                }
+            })
+        }
+    });
 });
 
 router.delete("/:id", (req, res, next) => {
     const id = req.params.id;
     const q = 'DELETE FROM `HoKhau` WHERE `id` = ?';
     db.query(q, id, (err, data) => {
-        if(err) {
+        if (err) {
             return res.json(err);
         } else {
             return res.json({
@@ -119,7 +165,7 @@ router.get("/thongke/timkiem", (req, res, next) => {
     console.log(soHoKhau);
     const q = `SELECT * FROM HoKhau WHERE soHoKhau LIKE '${soHoKhau}%'`;
     db.query(q, (err, data) => {
-        if(err) {
+        if (err) {
             return res.json(err);
         }
         else {
@@ -128,6 +174,22 @@ router.get("/thongke/timkiem", (req, res, next) => {
                 message: "thong tin HoKhau",
                 data: data
             });
+        }
+    })
+});
+
+router.get("/thaydoi/hokhau", (req, res, next) => {
+    const q = "SELECT * FROM `ThayDoiHoKhau`";
+    db.query(q, (err, data) => {
+        if (err) {
+            return res.json(err);
+        }
+        else {
+            return res.json({
+                success: true,
+                message: "Thong tin bang ThayDoiHoKhau",
+                data: data
+            })
         }
     })
 });

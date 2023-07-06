@@ -1,0 +1,19 @@
+.kanban-top {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.kanban-top-ele {
+    margin-left: 20px;
+}
+
+.kanban-top-ele-2 {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.ele-title {
+    color: black;
+}
