@@ -175,3 +175,7 @@ INSERT INTO TamTru (soGiayTamTru, lyDo, thoiGianTamTru, HoTen, soCMND, ngaySinh,
 ('TT003', 'Công tác', '2023-06-17', 'Lê Xuân Bảo', '150234227', '1988-03-03', 1, 'Giáo viên'),
 ('TT004', 'Du lịch', '2023-06-18', 'Phạm Thị Hoài Thương', '070507996', '1992-04-04', 0, 'Nhân viên văn phòng'),
 ('TT005', 'Công tác', '2023-06-19', 'Đỗ Tiến Dũng', '496638939', '1997-05-05', 1, 'Công nhân');
+
+INSERT INTO NguoiDung (userName, passWord, role) VALUES
+('totruong', '1234', 0),
+('canbo', '1234', 1);

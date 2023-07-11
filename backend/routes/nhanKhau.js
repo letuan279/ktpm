@@ -113,8 +113,8 @@ router.delete("/:id", (req, res, next) => {
 });
 
 router.post("/tamtru", (req, res, next) => {
-    const { soGiayTamTru, lyDo, thoiGianTamTru, HoTen, soCMND, ngaySinh, gioiTinh } = req.body;
-    const q = `INSERT INTO TamTru (soGiayTamTru, lyDo, thoiGianTamTru, HoTen, soCMND, ngaySinh, gioiTinh) VALUES ('${soGiayTamTru}', '${lyDo}', '${thoiGianTamTru}', '${HoTen}', '${soCMND}', '${ngaySinh}', ${gioiTinh})`;
+    const { soGiayTamTru, lyDo, thoiGianTamTru, HoTen, soCMND, ngaySinh, gioiTinh, ngheNghiep } = req.body;
+    const q = `INSERT INTO TamTru (soGiayTamTru, lyDo, thoiGianTamTru, HoTen, soCMND, ngaySinh, gioiTinh, ngheNghiep) VALUES ('${soGiayTamTru}', '${lyDo}', '${thoiGianTamTru}', '${HoTen}', '${soCMND}', '${ngaySinh}', ${gioiTinh}, '${ngheNghiep}')`;
     db.query(q, (err, data) => {
         if (err) {
             return res.json(err);
