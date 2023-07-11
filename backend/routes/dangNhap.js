@@ -4,7 +4,6 @@ const db = require("../connect_db");
 
 router.post("/", (req, res, next) => {
     const { userName, passWord } = req.body;
-    console.log(1);
     const q = `SELECT * FROM NguoiDung WHERE username = '${userName}' AND password = '${passWord}'`;
     db.query(q, (err, data) => {
         if (err) {
