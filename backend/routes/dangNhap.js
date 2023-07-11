@@ -3,13 +3,14 @@ const router = express.Router();
 const db = require("../connect_db");
 
 router.post("/", (req, res, next) => {
-    const {userName, passWord} = req.body;
-    const q = `SELECT * FROM NguoiDung WHERE username = '${userName}' AND password = '${passWord}'`;    
+    const { userName, passWord } = req.body;
+    console.log(1);
+    const q = `SELECT * FROM NguoiDung WHERE username = '${userName}' AND password = '${passWord}'`;
     db.query(q, (err, data) => {
-        if(err) {
+        if (err) {
             return res.json(err);
         }
-        if(data.length > 0) {
+        if (data.length > 0) {
             return res.json({
                 success: true,
                 message: "Thong tin nguoi dung",
